@@ -20,7 +20,7 @@ import { cn } from '@/lib/utils';
 
 type TabType = 'thinking' | 'code' | 'solution' | 'interview';
 
-// 代码高亮组件 - 深色背景
+// 代码高亮组件 - 浅色背景
 function CodeBlock({ code, fileName }: { code: string; fileName?: string }) {
   const [copied, setCopied] = useState(false);
   
@@ -76,13 +76,13 @@ function CodeBlock({ code, fileName }: { code: string; fileName?: string }) {
       }
       
       if (match[1]) { // keyword
-        parts.push(<span key={`${keyPrefix}-${partIndex++}`} className="text-purple-400 font-medium">{match[1]}</span>);
+        parts.push(<span key={`${keyPrefix}-${partIndex++}`} className="text-purple-600 font-medium">{match[1]}</span>);
       } else if (match[2]) { // literal
-        parts.push(<span key={`${keyPrefix}-${partIndex++}`} className="text-orange-400">{match[2]}</span>);
+        parts.push(<span key={`${keyPrefix}-${partIndex++}`} className="text-orange-600">{match[2]}</span>);
       } else if (match[3]) { // number
-        parts.push(<span key={`${keyPrefix}-${partIndex++}`} className="text-orange-400">{match[3]}</span>);
+        parts.push(<span key={`${keyPrefix}-${partIndex++}`} className="text-orange-600">{match[3]}</span>);
       } else if (match[4]) { // string
-        parts.push(<span key={`${keyPrefix}-${partIndex++}`} className="text-green-400">{match[4]}</span>);
+        parts.push(<span key={`${keyPrefix}-${partIndex++}`} className="text-green-600">{match[4]}</span>);
       }
       
       lastIndex = regex.lastIndex;
@@ -96,9 +96,9 @@ function CodeBlock({ code, fileName }: { code: string; fileName?: string }) {
   };
   
   return (
-    <div className="bg-[#1e1e2e] rounded-lg overflow-hidden shadow-lg border border-slate-200">
+    <div className="bg-white rounded-lg overflow-hidden shadow-lg border border-slate-200">
       {fileName && (
-        <div className="flex items-center justify-between px-4 py-2 bg-[#181825] border-b border-slate-200">
+        <div className="flex items-center justify-between px-4 py-2 bg-slate-50 border-b border-slate-200">
           <div className="flex items-center gap-2">
             <div className="flex gap-1.5">
               <div className="w-3 h-3 rounded-full bg-red-500" />
@@ -112,7 +112,7 @@ function CodeBlock({ code, fileName }: { code: string; fileName?: string }) {
             className="p-1.5 hover:bg-slate-100 rounded transition-colors"
           >
             {copied ? (
-              <Check className="w-4 h-4 text-green-400" />
+              <Check className="w-4 h-4 text-green-600" />
             ) : (
               <Copy className="w-4 h-4 text-slate-400" />
             )}
@@ -121,14 +121,14 @@ function CodeBlock({ code, fileName }: { code: string; fileName?: string }) {
       )}
       <div className="flex">
         {/* Line numbers */}
-        <div className="py-4 px-3 bg-[#181825] text-slate-500 text-sm font-mono select-none border-r border-slate-200">
+        <div className="py-4 px-3 bg-slate-50 text-slate-500 text-sm font-mono select-none border-r border-slate-200">
           {code.split('\n').map((_, i) => (
             <div key={i} className="leading-relaxed text-right">{i + 1}</div>
           ))}
         </div>
         {/* Code content */}
         <pre className="p-4 overflow-x-auto text-sm flex-1">
-          <code className="font-mono text-slate-700 leading-relaxed">
+          <code className="font-mono text-slate-800 leading-relaxed">
             {highlightCode(code)}
           </code>
         </pre>
@@ -224,7 +224,7 @@ export default function ProblemDetail() {
                 </Link>
                 <span className={cn(
                   'text-xs px-2 py-1 rounded font-medium',
-                  problem.difficulty === 'easy' && 'bg-green-500/20 text-green-400',
+                  problem.difficulty === 'easy' && 'bg-green-500/20 text-green-600',
                   problem.difficulty === 'medium' && 'bg-amber-500/20 text-amber-400',
                   problem.difficulty === 'hard' && 'bg-red-500/20 text-red-400'
                 )}>
@@ -297,7 +297,7 @@ export default function ProblemDetail() {
                           </div>
                           <div>
                             <span className="text-slate-500">输出：</span>
-                            <code className="text-green-400 ml-1 font-mono text-xs">{example.output}</code>
+                            <code className="text-green-600 ml-1 font-mono text-xs">{example.output}</code>
                           </div>
                           {example.explanation && (
                             <div className="text-slate-500 text-xs pt-1 border-t border-slate-200 mt-2">
@@ -397,7 +397,7 @@ export default function ProblemDetail() {
                                 )}>
                                   {guide.step}
                                 </span>
-                                <span className="font-medium text-left text-slate-700">{guide.question}</span>
+                                <span className="font-medium text-left text-slate-800">{guide.question}</span>
                               </div>
                               {expandedSteps.includes(guide.step) ? (
                                 <ChevronUp className="w-4 h-4 text-slate-500" />
@@ -429,7 +429,7 @@ export default function ProblemDetail() {
                                         variant="outline"
                                         size="sm"
                                         onClick={() => toggleAnswer(guide.step)}
-                                        className="gap-2 border-green-500/50 text-green-400 hover:bg-green-500/10 bg-transparent"
+                                        className="gap-2 border-green-500/50 text-green-600 hover:bg-green-500/10 bg-transparent"
                                       >
                                         <Sparkles className="w-4 h-4" />
                                         查看答案
@@ -584,7 +584,7 @@ export default function ProblemDetail() {
                                   {index + 1}
                                 </span>
                                 <div>
-                                  <span className="font-medium text-sm text-slate-700">{step.title}</span>
+                                  <span className="font-medium text-sm text-slate-800">{step.title}</span>
                                   <span className="text-slate-500 text-sm"> - {step.explanation}</span>
                                 </div>
                               </div>
@@ -641,7 +641,7 @@ export default function ProblemDetail() {
                           <div className="space-y-4">
                             {problem.interview.followUp.map((item, index) => (
                               <div key={index} className="border-l-2 border-blue-300 pl-4">
-                                <p className="font-medium text-sm mb-1 text-slate-700">Q: {item.question}</p>
+                                <p className="font-medium text-sm mb-1 text-slate-800">Q: {item.question}</p>
                                 <p className="text-slate-400 text-sm">A: {item.answer}</p>
                               </div>
                             ))}
