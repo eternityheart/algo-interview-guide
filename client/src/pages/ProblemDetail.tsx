@@ -318,7 +318,7 @@ export default function ProblemDetail() {
                   </h3>
                   <div className="space-y-2">
                     <div className="flex items-center gap-2 text-sm">
-                      <span className="text-yellow-400">⚡</span>
+                      <span className="text-yellow-700">⚡</span>
                       <span className="text-slate-500">时间：</span>
                       <span className="text-slate-600">{problem.interview.timeComplexity}</span>
                     </div>
@@ -420,7 +420,7 @@ export default function ProblemDetail() {
                                         variant="outline"
                                         size="sm"
                                         onClick={() => toggleHint(guide.step)}
-                                        className="gap-2 border-yellow-500/50 text-yellow-400 hover:bg-yellow-500/10 bg-transparent"
+                                        className="gap-2 border-yellow-600 text-yellow-700 hover:bg-yellow-50 bg-transparent"
                                       >
                                         <Lightbulb className="w-4 h-4" />
                                         查看提示
@@ -429,7 +429,7 @@ export default function ProblemDetail() {
                                         variant="outline"
                                         size="sm"
                                         onClick={() => toggleAnswer(guide.step)}
-                                        className="gap-2 border-green-500/50 text-green-600 hover:bg-green-500/10 bg-transparent"
+                                        className="gap-2 border-green-600 text-green-700 hover:bg-green-50 bg-transparent"
                                       >
                                         <Sparkles className="w-4 h-4" />
                                         查看答案
@@ -437,16 +437,16 @@ export default function ProblemDetail() {
                                     </div>
                                     
                                     {showHints[guide.step] && (
-                                      <div className="bg-yellow-500/10 border border-yellow-500/30 rounded-lg p-3">
-                                        <p className="text-sm text-yellow-300">
+                                      <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-3">
+                                        <p className="text-sm text-yellow-800">
                                           <strong>提示：</strong>{guide.hint}
                                         </p>
                                       </div>
                                     )}
                                     
                                     {showAnswers[guide.step] && (
-                                      <div className="bg-green-500/10 border border-green-500/30 rounded-lg p-3">
-                                        <p className="text-sm text-green-300">
+                                      <div className="bg-green-50 border border-green-200 rounded-lg p-3">
+                                        <p className="text-sm text-green-800">
                                           <strong>答案：</strong>{guide.answer}
                                         </p>
                                       </div>
@@ -517,12 +517,12 @@ export default function ProblemDetail() {
                             />
                             
                             {/* Code Explanation */}
-                            <div className="bg-yellow-500/10 border border-yellow-500/30 rounded-lg p-4">
+                            <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
                               <div className="flex items-start gap-2">
-                                <Lightbulb className="w-5 h-5 text-yellow-400 flex-shrink-0 mt-0.5" />
+                                <Lightbulb className="w-5 h-5 text-yellow-700 flex-shrink-0 mt-0.5" />
                                 <div>
-                                  <h4 className="font-medium text-yellow-400 mb-1">代码解释</h4>
-                                  <p className="text-sm text-yellow-200/80">
+                                  <h4 className="font-medium text-yellow-700 mb-1">代码解释</h4>
+                                  <p className="text-sm text-yellow-800">
                                     {problem.codeSteps[currentCodeStep].explanation}
                                   </p>
                                 </div>
@@ -618,7 +618,7 @@ export default function ProblemDetail() {
                         <div className="grid grid-cols-2 gap-4">
                           <div className="bg-slate-50 rounded-lg border border-slate-200 p-4">
                             <h4 className="font-medium mb-2 flex items-center gap-2 text-slate-800">
-                              <Clock className="w-4 h-4 text-yellow-400" />
+                              <Clock className="w-4 h-4 text-yellow-700" />
                               时间复杂度
                             </h4>
                             <p className="text-slate-600">{problem.interview.timeComplexity}</p>

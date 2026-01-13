@@ -11,11 +11,14 @@ export default function Layout({ children }: LayoutProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   
   return (
-    <div className="min-h-screen relative bg-slate-50">
-      {/* Background Pattern */}
-      <div className="fixed inset-0 z-0 opacity-30 pointer-events-none">
-        <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px]"></div>
-        <div className="absolute left-0 right-0 top-0 -z-10 m-auto h-[310px] w-[310px] rounded-full bg-blue-400 opacity-20 blur-[100px]"></div>
+    <div className="min-h-screen relative bg-slate-50/80">
+      {/* Background Image */}
+      <div className="fixed inset-0 z-0 pointer-events-none">
+        <div 
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat bg-fixed"
+          style={{ backgroundImage: 'url(/bg-wedding.png)' }}
+        />
+        <div className="absolute inset-0 bg-white/70 backdrop-blur-[2px]" />
       </div>
       
       {/* Top Navigation Bar */}
