@@ -22,7 +22,7 @@ const decorativeTags = [
   { icon: '🔗', name: '链表', desc: '指针操作' },
   { icon: '📋', name: '数组', desc: '原地操作' },
   { icon: '⊞', name: '矩阵', desc: '二维操作' },
-  { icon: '🔗', name: '图论', desc: 'BFS/DFS' },
+  { icon: '🕸️', name: '图论', desc: 'BFS/DFS' },
   { icon: '💡', name: '技巧', desc: '位运算' },
   { icon: '↕', name: '排序', desc: '快排/归并' },
   { icon: '🔍', name: '查找', desc: '线性/二分' },
@@ -158,7 +158,7 @@ export default function Home() {
                   <div className="flex items-center gap-3">
                     <div className={cn(
                       'w-8 h-8 sm:w-10 sm:h-10 rounded-full flex items-center justify-center text-xs sm:text-sm font-bold shadow-md flex-shrink-0',
-                      index === 0 ? 'bg-gradient-to-r from-blue-500 to-indigo-600 text-white' : 'bg-white text-slate-600 border border-slate-200'
+                      'bg-white text-slate-600 border border-slate-200'
                     )}>
                       {item.step}
                     </div>

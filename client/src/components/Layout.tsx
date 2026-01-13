@@ -32,7 +32,7 @@ export default function Layout({ children }: LayoutProps) {
                   <span className="text-white font-bold text-lg">&lt;/&gt;</span>
                 </div>
                 <div className="hidden sm:block">
-                  <h1 className="font-bold text-lg text-slate-800">算法通关指南</h1>
+                  <h1 className="font-bold text-lg text-slate-800">明德惟馨的算法通关指南</h1>
                   <p className="text-xs text-slate-500">大厂面试必备</p>
                 </div>
               </div>
