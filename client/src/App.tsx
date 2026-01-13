@@ -6,7 +6,7 @@ import ErrorBoundary from "./components/ErrorBoundary";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import Home from "./pages/Home";
 import ProblemDetail from "./pages/ProblemDetail";
-import Templates from "./pages/Templates";
+
 
 function AppRouter() {
   return (
@@ -14,7 +14,7 @@ function AppRouter() {
       <Switch>
         <Route path="/" component={Home} />
         <Route path="/problem/:id" component={ProblemDetail} />
-        <Route path="/templates" component={Templates} />
+
         <Route path="/404" component={NotFound} />
         <Route component={NotFound} />
       </Switch>

@@ -36,27 +36,27 @@ const learningPath = [
   { step: 4, title: '面试技巧', desc: '掌握表达方法', icon: MessageSquare },
 ];
 
-// 分类卡片颜色配置 - 温馨婚礼主题配色
+// 分类卡片颜色配置 - 专业蓝色主题配色
 const categoryColors: { [key: string]: { bg: string; border: string; text: string; gradient: string } } = {
-  'hash': { bg: 'bg-emerald-50', border: 'border-emerald-300', text: 'text-emerald-700', gradient: 'from-emerald-400 to-teal-500' },
-  'two-pointer': { bg: 'bg-amber-50', border: 'border-amber-300', text: 'text-amber-700', gradient: 'from-amber-400 to-orange-500' },
-  'sliding-window': { bg: 'bg-violet-50', border: 'border-violet-300', text: 'text-violet-700', gradient: 'from-violet-400 to-purple-500' },
-  'substring': { bg: 'bg-pink-50', border: 'border-pink-300', text: 'text-pink-700', gradient: 'from-pink-400 to-rose-500' },
-  'backtracking': { bg: 'bg-red-50', border: 'border-red-300', text: 'text-red-700', gradient: 'from-red-400 to-rose-500' },
-  'binary-search': { bg: 'bg-cyan-50', border: 'border-cyan-300', text: 'text-cyan-700', gradient: 'from-cyan-400 to-blue-500' },
-  'stack': { bg: 'bg-blue-50', border: 'border-blue-300', text: 'text-blue-700', gradient: 'from-blue-400 to-indigo-500' },
-  'heap': { bg: 'bg-purple-50', border: 'border-purple-300', text: 'text-purple-700', gradient: 'from-purple-400 to-violet-500' },
-  'greedy': { bg: 'bg-green-50', border: 'border-green-300', text: 'text-green-700', gradient: 'from-green-400 to-emerald-500' },
-  'binary-tree': { bg: 'bg-teal-50', border: 'border-teal-300', text: 'text-teal-700', gradient: 'from-teal-400 to-cyan-500' },
-  'dp': { bg: 'bg-orange-50', border: 'border-orange-300', text: 'text-orange-700', gradient: 'from-orange-400 to-amber-500' },
-  'multi-dp': { bg: 'bg-indigo-50', border: 'border-indigo-300', text: 'text-indigo-700', gradient: 'from-indigo-400 to-blue-500' },
-  'technique': { bg: 'bg-yellow-50', border: 'border-yellow-300', text: 'text-yellow-700', gradient: 'from-yellow-400 to-amber-500' },
-  'graph': { bg: 'bg-rose-50', border: 'border-rose-300', text: 'text-rose-700', gradient: 'from-rose-400 to-pink-500' },
-  'linked-list': { bg: 'bg-lime-50', border: 'border-lime-300', text: 'text-lime-700', gradient: 'from-lime-400 to-green-500' },
-  'array': { bg: 'bg-sky-50', border: 'border-sky-300', text: 'text-sky-700', gradient: 'from-sky-400 to-blue-500' },
-  'matrix': { bg: 'bg-fuchsia-50', border: 'border-fuchsia-300', text: 'text-fuchsia-700', gradient: 'from-fuchsia-400 to-purple-500' },
-  'sorting': { bg: 'bg-rose-50', border: 'border-rose-300', text: 'text-rose-700', gradient: 'from-rose-400 to-red-500' },
-  'searching': { bg: 'bg-cyan-50', border: 'border-cyan-300', text: 'text-cyan-700', gradient: 'from-cyan-500 to-teal-500' },
+  'hash': { bg: 'bg-blue-50', border: 'border-blue-200', text: 'text-blue-700', gradient: 'from-blue-500 to-indigo-600' },
+  'two-pointer': { bg: 'bg-indigo-50', border: 'border-indigo-200', text: 'text-indigo-700', gradient: 'from-indigo-500 to-violet-600' },
+  'sliding-window': { bg: 'bg-sky-50', border: 'border-sky-200', text: 'text-sky-700', gradient: 'from-sky-500 to-blue-600' },
+  'substring': { bg: 'bg-cyan-50', border: 'border-cyan-200', text: 'text-cyan-700', gradient: 'from-cyan-500 to-sky-600' },
+  'backtracking': { bg: 'bg-violet-50', border: 'border-violet-200', text: 'text-violet-700', gradient: 'from-violet-500 to-purple-600' },
+  'binary-search': { bg: 'bg-teal-50', border: 'border-teal-200', text: 'text-teal-700', gradient: 'from-teal-500 to-emerald-600' },
+  'stack': { bg: 'bg-slate-50', border: 'border-slate-200', text: 'text-slate-700', gradient: 'from-slate-500 to-gray-600' },
+  'heap': { bg: 'bg-purple-50', border: 'border-purple-200', text: 'text-purple-700', gradient: 'from-purple-500 to-fuchsia-600' },
+  'greedy': { bg: 'bg-emerald-50', border: 'border-emerald-200', text: 'text-emerald-700', gradient: 'from-emerald-500 to-green-600' },
+  'binary-tree': { bg: 'bg-green-50', border: 'border-green-200', text: 'text-green-700', gradient: 'from-green-500 to-teal-600' },
+  'dp': { bg: 'bg-amber-50', border: 'border-amber-200', text: 'text-amber-700', gradient: 'from-amber-500 to-orange-600' },
+  'multi-dp': { bg: 'bg-orange-50', border: 'border-orange-200', text: 'text-orange-700', gradient: 'from-orange-500 to-red-600' },
+  'technique': { bg: 'bg-yellow-50', border: 'border-yellow-200', text: 'text-yellow-700', gradient: 'from-yellow-500 to-amber-600' },
+  'graph': { bg: 'bg-rose-50', border: 'border-rose-200', text: 'text-rose-700', gradient: 'from-rose-500 to-pink-600' },
+  'linked-list': { bg: 'bg-lime-50', border: 'border-lime-200', text: 'text-lime-700', gradient: 'from-lime-500 to-green-600' },
+  'array': { bg: 'bg-blue-50', border: 'border-blue-200', text: 'text-blue-700', gradient: 'from-blue-500 to-indigo-600' },
+  'matrix': { bg: 'bg-fuchsia-50', border: 'border-fuchsia-200', text: 'text-fuchsia-700', gradient: 'from-fuchsia-500 to-purple-600' },
+  'sorting': { bg: 'bg-red-50', border: 'border-red-200', text: 'text-red-700', gradient: 'from-red-500 to-rose-600' },
+  'searching': { bg: 'bg-cyan-50', border: 'border-cyan-200', text: 'text-cyan-700', gradient: 'from-cyan-500 to-teal-600' },
 };
 
 export default function Home() {
@@ -108,22 +108,22 @@ export default function Home() {
 
   return (
     <Layout>
-      <div className="min-h-screen">
+      <div className="min-h-screen pb-12">
         {/* Hero Section */}
         <div className="container py-6 sm:py-12">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
-            className="bg-gradient-to-br from-rose-50/80 via-cream-50/90 to-amber-50/80 backdrop-blur-md rounded-2xl p-4 sm:p-8 shadow-lg border border-rose-200/50"
+            className="bg-white/80 backdrop-blur-md rounded-2xl p-4 sm:p-8 shadow-lg border border-slate-200"
           >
-            <h1 className="text-2xl sm:text-4xl font-bold mb-2 text-rose-800">
-              用<span className="text-rose-600">一套方法</span>
+            <h1 className="text-2xl sm:text-4xl font-bold mb-2 text-slate-800">
+              用<span className="text-blue-600">一套方法</span>
             </h1>
-            <h1 className="text-2xl sm:text-4xl font-bold mb-4 sm:mb-6 text-rose-800">
-              解决<span className="text-amber-600">多类题目</span>
+            <h1 className="text-2xl sm:text-4xl font-bold mb-4 sm:mb-6 text-slate-800">
+              解决<span className="text-indigo-600">多类题目</span>
             </h1>
-            <p className="text-rose-700/80 max-w-2xl mb-6 sm:mb-8 text-sm sm:text-base">
+            <p className="text-slate-600 max-w-2xl mb-6 sm:mb-8 text-sm sm:text-base">
               专为零基础小白设计，从思路分析到代码实现，循循善诱带你掌握算法面试核心技巧。不是死记硬背，而是理解分析问题的思考过程。
             </p>
             
@@ -135,12 +135,12 @@ export default function Home() {
                   initial={{ opacity: 0, scale: 0.9 }}
                   animate={{ opacity: 1, scale: 1 }}
                   transition={{ delay: index * 0.03 }}
-                  className="flex items-center gap-1.5 sm:gap-2 px-2.5 sm:px-4 py-1.5 sm:py-2 rounded-lg bg-white/70 border border-rose-200/60 text-rose-700 shadow-sm backdrop-blur-sm"
+                  className="flex items-center gap-1.5 sm:gap-2 px-2.5 sm:px-4 py-1.5 sm:py-2 rounded-lg bg-slate-50 border border-slate-200 text-slate-700 shadow-sm"
                 >
-                  <span className="text-base sm:text-lg text-rose-500">{tag.icon}</span>
+                  <span className="text-base sm:text-lg text-blue-500">{tag.icon}</span>
                   <div>
-                    <div className="text-xs sm:text-sm font-medium text-rose-800">{tag.name}</div>
-                    <div className="text-[10px] sm:text-xs text-rose-600/70 hidden sm:block">{tag.desc}</div>
+                    <div className="text-xs sm:text-sm font-medium text-slate-800">{tag.name}</div>
+                    <div className="text-[10px] sm:text-xs text-slate-500 hidden sm:block">{tag.desc}</div>
                   </div>
                 </motion.div>
               ))}
@@ -150,25 +150,25 @@ export default function Home() {
         
         {/* Learning Path */}
         <div className="container py-4 sm:py-8">
-          <div className="bg-gradient-to-r from-rose-50/80 via-cream-50/90 to-amber-50/80 backdrop-blur-md rounded-2xl p-4 sm:p-6 shadow-lg border border-rose-200/50">
-            <h2 className="text-base sm:text-lg font-semibold mb-4 sm:mb-6 text-rose-800">学习路径</h2>
+          <div className="bg-white/80 backdrop-blur-md rounded-2xl p-4 sm:p-6 shadow-lg border border-slate-200">
+            <h2 className="text-base sm:text-lg font-semibold mb-4 sm:mb-6 text-slate-800">学习路径</h2>
             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 sm:gap-0 max-w-4xl">
               {learningPath.map((item, index) => (
                 <div key={item.step} className="flex items-center w-full sm:w-auto">
                   <div className="flex items-center gap-3">
                     <div className={cn(
                       'w-8 h-8 sm:w-10 sm:h-10 rounded-full flex items-center justify-center text-xs sm:text-sm font-bold shadow-md flex-shrink-0',
-                      index === 0 ? 'bg-gradient-to-r from-rose-400 to-amber-500 text-white' : 'bg-white/80 text-rose-600 border border-rose-200'
+                      index === 0 ? 'bg-gradient-to-r from-blue-500 to-indigo-600 text-white' : 'bg-white text-slate-600 border border-slate-200'
                     )}>
                       {item.step}
                     </div>
                     <div>
-                      <div className="font-medium text-rose-800 text-sm sm:text-base">{item.title}</div>
-                      <div className="text-xs sm:text-sm text-rose-600/70">{item.desc}</div>
+                      <div className="font-medium text-slate-800 text-sm sm:text-base">{item.title}</div>
+                      <div className="text-xs sm:text-sm text-slate-500">{item.desc}</div>
                     </div>
                   </div>
                   {index < learningPath.length - 1 && (
-                    <div className="hidden sm:block mx-4 sm:mx-6 text-rose-400">→</div>
+                    <div className="hidden sm:block mx-4 sm:mx-6 text-slate-300">→</div>
                   )}
                 </div>
               ))}
@@ -178,26 +178,26 @@ export default function Home() {
         
         {/* Category Selection */}
         <div className="container py-4 sm:py-8">
-          <div className="bg-gradient-to-br from-rose-50/80 via-cream-50/90 to-amber-50/80 backdrop-blur-md rounded-2xl p-4 sm:p-6 shadow-lg border border-rose-200/50 mb-6">
+          <div className="bg-white/80 backdrop-blur-md rounded-2xl p-4 sm:p-6 shadow-lg border border-slate-200 mb-6">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-4 sm:mb-6 gap-2">
               <div className="flex items-center gap-2 sm:gap-3 flex-wrap">
-                <span className="text-rose-500">▼</span>
-                <h2 className="text-base sm:text-lg font-semibold text-rose-800">选择题目类别</h2>
-                <span className="text-xs sm:text-sm text-rose-600/70">
+                <span className="text-blue-500">▼</span>
+                <h2 className="text-base sm:text-lg font-semibold text-slate-800">选择题目类别</h2>
+                <span className="text-xs sm:text-sm text-slate-500">
                   已选 {selectedCategories.length} 类，共 {selectedProblemsCount} 题
                 </span>
               </div>
               <div className="flex items-center gap-2">
                 <button
                   onClick={selectAll}
-                  className="text-xs sm:text-sm text-rose-600/70 hover:text-rose-600 transition-colors"
+                  className="text-xs sm:text-sm text-slate-500 hover:text-blue-600 transition-colors"
                 >
                   全选
                 </button>
-                <span className="text-rose-400">×</span>
+                <span className="text-slate-300">×</span>
                 <button
                   onClick={clearAll}
-                  className="text-xs sm:text-sm text-rose-600/70 hover:text-rose-600 transition-colors"
+                  className="text-xs sm:text-sm text-slate-500 hover:text-blue-600 transition-colors"
                 >
                   清空
                 </button>
@@ -208,7 +208,7 @@ export default function Home() {
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2 sm:gap-3">
               {categories.map((category) => {
                 const isSelected = selectedCategories.includes(category.id);
-                const colors = categoryColors[category.id] || { bg: 'bg-gray-50', border: 'border-gray-300', text: 'text-gray-700', gradient: 'from-gray-400 to-gray-500' };
+                const colors = categoryColors[category.id] || { bg: 'bg-slate-50', border: 'border-slate-200', text: 'text-slate-700', gradient: 'from-slate-400 to-slate-500' };
                 const problemCount = allProblems.filter(p => p.category === category.id).length;
                 
                 return (
@@ -218,38 +218,29 @@ export default function Home() {
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
                     className={cn(
-                      'relative p-3 sm:p-4 rounded-xl border-2 transition-all text-left shadow-sm backdrop-blur-sm',
+                      'relative p-3 sm:p-4 rounded-xl border transition-all text-left shadow-sm',
                       isSelected
                         ? `${colors.bg} ${colors.border}`
-                        : 'bg-white/70 border-rose-100 hover:border-rose-200'
+                        : 'bg-white border-slate-100 hover:border-slate-200'
                     )}
                   >
                     {/* Checkbox */}
                     <div className={cn(
-                      'absolute top-2 sm:top-3 left-2 sm:left-3 w-4 h-4 sm:w-5 sm:h-5 rounded border-2 flex items-center justify-center transition-colors',
-                      isSelected
-                        ? `${colors.border} ${colors.bg}`
-                        : 'border-rose-200 bg-white/80'
+                      'absolute top-2 right-2 w-4 h-4 rounded-full border flex items-center justify-center transition-colors',
+                      isSelected ? `bg-white ${colors.text.replace('text-', 'border-')}` : 'border-slate-200'
                     )}>
-                      {isSelected && (
-                        <CheckCircle2 className={cn('w-3 h-3 sm:w-4 sm:h-4', colors.text)} />
-                      )}
+                      {isSelected && <div className={`w-2 h-2 rounded-full ${colors.text.replace('text-', 'bg-')}`} />}
                     </div>
                     
-                    <div className="pt-3 sm:pt-4">
-                      <div className="flex items-center gap-1.5 sm:gap-2 mb-1">
-                        <span className={cn('text-base sm:text-lg', isSelected ? colors.text : 'text-rose-400')}>
-                          {category.icon}
-                        </span>
-                        <span className={cn(
-                          'font-medium text-xs sm:text-sm',
-                          isSelected ? colors.text : 'text-rose-700'
-                        )}>
+                    <div className="flex flex-col h-full justify-between gap-2">
+                      <div className="text-xl sm:text-2xl">{category.icon}</div>
+                      <div>
+                        <div className={cn("font-medium text-sm sm:text-base", isSelected ? colors.text : 'text-slate-700')}>
                           {category.name}
-                        </span>
-                      </div>
-                      <div className="text-xs sm:text-sm text-rose-600/60">
-                        {problemCount} 题
+                        </div>
+                        <div className={cn("text-xs", isSelected ? colors.text : 'text-slate-500', 'opacity-80')}>
+                          {problemCount} 题
+                        </div>
                       </div>
                     </div>
                   </motion.button>
@@ -258,62 +249,70 @@ export default function Home() {
             </div>
           </div>
           
-          {/* Problem List by Category */}
-          <div className="space-y-4 sm:space-y-6">
-            {filteredProblems.map(({ category, problems: categoryProblems }) => {
-              const colors = categoryColors[category.id] || { bg: 'bg-gray-50', border: 'border-gray-300', text: 'text-gray-700', gradient: 'from-gray-400 to-gray-500' };
+          {/* Problems List */}
+          <div className="space-y-6 sm:space-y-8">
+            {filteredProblems.map(({ category, problems }) => {
+              const colors = categoryColors[category.id] || { bg: 'bg-slate-50', border: 'border-slate-200', text: 'text-slate-700', gradient: 'from-slate-400 to-slate-500' };
               
               return (
                 <motion.div
                   key={category.id}
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
-                  className="bg-white/70 backdrop-blur-md rounded-2xl border border-rose-200/50 overflow-hidden shadow-lg"
+                  className="bg-white/80 backdrop-blur-md rounded-2xl p-4 sm:p-6 shadow-lg border border-slate-200"
                 >
-                  {/* Category Header */}
-                  <div className={cn('px-4 sm:px-5 py-3 sm:py-4 bg-gradient-to-r text-white', colors.gradient)}>
-                    <div className="flex items-center gap-2 sm:gap-3">
-                      <span className="text-lg sm:text-xl">{category.icon}</span>
-                      <div>
-                        <h3 className="font-semibold text-sm sm:text-base">{category.name}</h3>
-                        <p className="text-xs sm:text-sm text-white/80">{categoryProblems.length} 道题目</p>
-                      </div>
+                  <div className="flex items-center gap-3 mb-4 sm:mb-6 border-b border-slate-100 pb-4">
+                    <div className="text-2xl sm:text-3xl">{category.icon}</div>
+                    <div>
+                      <h3 className="text-lg sm:text-xl font-bold text-slate-800">{category.name}</h3>
+                      <p className="text-xs sm:text-sm text-slate-500">{problems.length} 道题目</p>
                     </div>
                   </div>
                   
-                  {/* Problems List */}
-                  <div className="divide-y divide-rose-100/50">
-                    {categoryProblems.map((problem, index) => {
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
+                    {problems.map((problem) => {
                       const isCompleted = completedProblems.includes(problem.id);
                       
                       return (
-                        <Link
-                          key={problem.id}
-                          href={`/problem/${problem.id}`}
-                        >
+                        <Link key={problem.id} href={`/problem/${problem.id}`}>
                           <motion.div
-                            whileHover={{ backgroundColor: 'rgba(251, 207, 232, 0.2)' }}
-                            className="px-4 sm:px-5 py-2.5 sm:py-3 flex flex-col sm:flex-row sm:items-center justify-between cursor-pointer gap-1 sm:gap-0"
+                            whileHover={{ scale: 1.02 }}
+                            whileTap={{ scale: 0.98 }}
+                            className={cn(
+                              "group relative p-4 rounded-xl border transition-all cursor-pointer h-full flex flex-col justify-between",
+                              isCompleted 
+                                ? "bg-emerald-50/50 border-emerald-200" 
+                                : "bg-white border-slate-100 hover:border-blue-200 hover:shadow-md"
+                            )}
                           >
-                            <div className="flex items-center gap-2 sm:gap-4">
-                              <span className="text-xs sm:text-sm text-rose-400 font-mono w-6 sm:w-8">
-                                {String(index + 1).padStart(2, '0')}
-                              </span>
-                              <span className="font-medium text-rose-800 text-sm sm:text-base">{problem.title}</span>
+                            <div className="flex justify-between items-start mb-2">
+                              <div className="flex items-center gap-2">
+                                <span className="text-sm font-mono text-slate-400">
+                                  {problem.id.split('-')[1]}
+                                </span>
+                                {isCompleted && (
+                                  <CheckCircle2 className="w-4 h-4 text-emerald-500" />
+                                )}
+                              </div>
                               <span className={cn(
-                                'text-[10px] sm:text-xs px-1.5 sm:px-2 py-0.5 rounded font-medium',
-                                problem.difficulty === 'easy' && 'bg-green-100/80 text-green-700',
-                                problem.difficulty === 'medium' && 'bg-amber-100/80 text-amber-700',
-                                problem.difficulty === 'hard' && 'bg-red-100/80 text-red-700'
+                                "text-xs px-2 py-0.5 rounded-full font-medium",
+                                problem.difficulty === 'easy' ? "bg-emerald-100 text-emerald-700" :
+                                problem.difficulty === 'medium' ? "bg-amber-100 text-amber-700" :
+                                "bg-rose-100 text-rose-700"
                               )}>
                                 {problem.difficulty === 'easy' ? '简单' : problem.difficulty === 'medium' ? '中等' : '困难'}
                               </span>
                             </div>
-                            <div className="flex items-center gap-2 sm:gap-3 ml-8 sm:ml-0">
-                              {isCompleted && (
-                                <CheckCircle2 className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-green-500" />
-                              )}
-                              <span className="text-rose-400">→</span>
+                            
+                            <h4 className={cn(
+                              "font-medium text-base mb-2 group-hover:text-blue-600 transition-colors",
+                              isCompleted ? "text-slate-600" : "text-slate-800"
+                            )}>
+                              {problem.title}
+                            </h4>
+                            
+                            <div className="flex items-center justify-end mt-2">
+                              <span className="text-slate-300 group-hover:text-blue-400 transition-colors">→</span>
                             </div>
                           </motion.div>
                         </Link>
@@ -323,14 +322,13 @@ export default function Home() {
                 </motion.div>
               );
             })}
+            
+            {filteredProblems.length === 0 && (
+              <div className="text-center py-12 text-slate-500 bg-white/50 rounded-2xl border border-slate-200">
+                <p>请选择题目类别以查看题目</p>
+              </div>
+            )}
           </div>
-          
-          {/* Empty State */}
-          {filteredProblems.length === 0 && (
-            <div className="text-center py-12 sm:py-20 bg-white/60 backdrop-blur-md rounded-2xl border border-rose-200/50">
-              <p className="text-rose-600/70">请选择至少一个题目类别</p>
-            </div>
-          )}
         </div>
       </div>
     </Layout>
