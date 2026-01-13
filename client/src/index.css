@@ -53,7 +53,7 @@
   --font-mono: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
   
   /* Custom colors */
-  --color-blue-50: oklch(0.97 0.01 250);
+  --color-blue-50: oklch(0.98 0.005 250);
   --color-blue-100: oklch(0.93 0.03 250);
 }
 
@@ -61,7 +61,7 @@
   --radius: 0.75rem;
 
   /* Professional Blue Theme */
-  --background: oklch(0.98 0.01 250);
+  --background: oklch(0.99 0.005 250);
   /* Cool white */
   --foreground: oklch(0.25 0.04 260);
   /* Deep blue-grey */
