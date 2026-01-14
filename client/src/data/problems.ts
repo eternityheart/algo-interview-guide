@@ -281,6 +281,85 @@ export const problems: Problem[] = [
   },
   // ==================== 滑动窗口类题目 ====================
   {
+    id: 'sliding-window-summary',
+    title: '对比总结：变长 vs 定长窗口',
+    titleEn: 'Sliding Window Summary',
+    category: 'sliding-window',
+    difficulty: 'medium',
+    description: '这两段代码分别代表了滑动窗口（Sliding Window）算法中最核心的两种形态。如果不理解它们的区别，做题时很容易搞混。\n\n简单来说：\n1. **变长窗口（while）**：是为了**“找最短”**。像手风琴一样，先拉长，再尽可能压缩。\n2. **定长窗口（if）**：是为了**“找固定长度”**。像一个固定大小的框，一格一格往右平移。',
+    examples: [],
+    thinkingGuide: [
+      { step: 1, question: '🐛 变长窗口（找最短）的核心逻辑是什么？', hint: '想想毛毛虫是怎么动的', answer: '策略是“宽进严出”。右指针一直向右扩充，直到满足条件。一旦满足，立刻触发内部 while 循环，左指针开始收缩，尝试找到最小的满足条件的窗口。' },
+      { step: 2, question: '🖼️ 定长窗口（找固定长度）的核心逻辑是什么？', hint: '想想相框是怎么移动的', answer: '策略是“保持体型”。窗口大小固定。每当右指针进一个，左指针必须出一个，保证窗口长度严格等于目标长度。' },
+      { step: 3, question: '⚖️ 什么时候用 while，什么时候用 if？', hint: '看题目要求', answer: '找最小/最长子串用 while（需要伸缩）；找异位词/排列用 if（长度固定）。' }
+    ],
+    codeSteps: [
+      {
+        title: '变长窗口：找最短子串',
+        description: '核心逻辑：while 循环压缩窗口',
+        code: `// 只要窗口还是合法的（required == 0 表示所有字符都齐了），就尝试缩小
+while(required == 0){ 
+    // 1. 更新最小长度（因为当前是合法的，所以有机会更新结果）
+    if(right - left + 1 < minLen){
+        minLen = right - left + 1;
+        minStart = left;
+    }
+
+    // 2. 准备移出左边的字符
+    char leftChar = s.charAt(left);
+    
+    // 3. 在计数表中，把这个字符“加回去”
+    // （因为要移出窗口，所以窗口里少了，对外面的需求need就多了）
+    need[leftChar]++; 
+    
+    // 4. 关键判断：
+    // 如果 need[leftChar] 变回 > 0 了，说明窗口里这个字符的数量“不够了”。
+    // 于是 required++，意味着“还需要凑齐的字符种类”变多了。
+    // 这会导致下一轮 while 循环条件失效，跳出循环，继续让 right 向右找。
+    if(need[leftChar] > 0) required++;
+    
+    // 5. 真正移动左指针
+    left++; 
+}`,
+        explanation: '像手风琴一样：先拉开（right++），满足条件后拼命压缩（left++），直到不能压为止。'
+      },
+      {
+        title: '定长窗口：找异位词',
+        description: '核心逻辑：if 判断维持长度',
+        code: `// 1. 判断窗口是否达标：长度必须严格等于 p 的长度
+if (right - left + 1 == p.length()) {
+    
+    // 2. 结算：如果 need 为 0（说明差异为 0，完全匹配），记录结果
+    if (need == 0) res.add(left);
+
+    // 3. 出窗口逻辑：准备移出左边的字符
+    char leftChar = s.charAt(left);
+    
+    // 4. 关键判断：
+    // count[leftChar - 'a'] >= 0 表示这个字符是 p 中原本需要的字符。
+    // 如果我们要把它移出窗口，那么我们对它的需求(need)就会增加。
+    if (count[leftChar - 'a'] >= 0) need++;
+    
+    // 5. 恢复计数
+    count[leftChar - 'a']++;
+    
+    // 6. 左指针移动（平移）
+    left++;
+}`,
+        explanation: '像相框平移：右边进一个，左边必须出一个，永远保持固定大小。'
+      }
+    ],
+    interview: {
+      approach: '理解这两种形态的区别是掌握滑动窗口的关键。变长窗口用于求极值（最小覆盖、最长无重复），定长窗口用于求固定长度的子串（异位词、排列）。',
+      timeComplexity: '两者都是 O(n)，因为左右指针都只遍历一次数组。',
+      spaceComplexity: 'O(1) 或 O(k)，取决于字符集大小。',
+      followUp: [
+        { question: '如果要求“至多包含 k 个不同字符的最长子串”，用哪种？', answer: '变长窗口。因为窗口大小不固定，需要通过收缩左边界来满足“至多 k 个”的条件。' },
+        { question: '如果要求“长度为 k 且和最大的子数组”，用哪种？', answer: '定长窗口。因为长度固定为 k。' }
+      ]
+    }
+  },
+  {
     id: 'longest-substring-without-repeating',
     title: '无重复字符的最长子串',
     titleEn: 'Longest Substring Without Repeating Characters',
