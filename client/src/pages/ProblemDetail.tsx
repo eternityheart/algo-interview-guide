@@ -210,16 +210,6 @@ export default function ProblemDetail() {
   // Calculate category progress
   const getCategoryProgress = () => {
     if (!categoryProblems.length) return { completed: 0, total: 0 };
-    const completedCount = categoryProblems.filter(p => 
-      localStorage.getItem(`problem-${p.id}-completed`) === 'true' || 
-      (p.id === id && isCompleted) // Include current problem if completed
-    ).length;
-    // If current problem was counted from localStorage but is now uncompleted, adjust count
-    const storedCurrent = localStorage.getItem(`problem-${id}-completed`) === 'true';
-    const finalCount = (storedCurrent === isCompleted) ? completedCount : 
-                      (isCompleted ? completedCount : completedCount - 1);
-    
-    // Simplification: just recalculate from scratch to be safe
     let count = 0;
     categoryProblems.forEach(p => {
       if (p.id === id) {
@@ -228,11 +218,24 @@ export default function ProblemDetail() {
         if (localStorage.getItem(`problem-${p.id}-completed`) === 'true') count++;
       }
     });
-    
     return { completed: count, total: categoryProblems.length };
   };
 
+  // Calculate global progress
+  const getGlobalProgress = () => {
+    let count = 0;
+    allProblems.forEach(p => {
+      if (p.id === id) {
+        if (isCompleted) count++;
+      } else {
+        if (localStorage.getItem(`problem-${p.id}-completed`) === 'true') count++;
+      }
+    });
+    return { completed: count, total: allProblems.length };
+  };
+
   const progress = getCategoryProgress();
+  const globalProgress = getGlobalProgress();
   const currentIndex = categoryProblems.findIndex(p => p.id === id);
   const prevProblem = currentIndex > 0 ? categoryProblems[currentIndex - 1] : null;
   const nextProblem = currentIndex < categoryProblems.length - 1 ? categoryProblems[currentIndex + 1] : null;
@@ -409,6 +412,20 @@ export default function ProblemDetail() {
             {/* Left Column - Problem Description (100% on mobile, 30% on desktop) */}
             <div className="w-full lg:w-[30%] flex-shrink-0">
               <div className="lg:sticky lg:top-36 space-y-4">
+                {/* Global Progress Bar */}
+                <div className="bg-white/90 backdrop-blur-sm rounded-xl p-4 shadow-lg border border-slate-200">
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="text-xs font-medium text-slate-500">总进度</span>
+                    <span className="text-xs font-bold text-blue-600">{globalProgress.completed}/{globalProgress.total}</span>
+                  </div>
+                  <div className="h-2 bg-slate-100 rounded-full overflow-hidden">
+                    <div 
+                      className="h-full bg-gradient-to-r from-blue-500 to-cyan-400 rounded-full transition-all duration-500 ease-out"
+                      style={{ width: `${(globalProgress.completed / globalProgress.total) * 100}%` }}
+                    />
+                  </div>
+                </div>
+
                 {/* Problem Title */}
                 <div className="bg-white/90 backdrop-blur-sm rounded-xl p-5 shadow-lg border border-slate-200">
                   <h1 className="text-xl font-bold mb-3 text-slate-800">{problem.title}</h1>
