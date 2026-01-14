@@ -119,16 +119,16 @@ function CodeBlock({ code, fileName }: { code: string; fileName?: string }) {
           </button>
         </div>
       )}
-      <div className="flex">
-        {/* Line numbers */}
-        <div className="py-4 px-3 bg-slate-50 text-slate-500 text-sm font-mono select-none border-r border-slate-200">
+      <div className="flex overflow-hidden">
+        {/* Line numbers - Hidden on mobile for more space */}
+        <div className="hidden sm:block py-4 px-3 bg-slate-50 text-slate-500 text-sm font-mono select-none border-r border-slate-200">
           {code.split('\n').map((_, i) => (
             <div key={i} className="leading-relaxed text-right">{i + 1}</div>
           ))}
         </div>
         {/* Code content */}
-        <pre className="p-4 overflow-x-auto text-sm flex-1">
-          <code className="font-mono text-slate-800 leading-relaxed">
+        <pre className="p-3 sm:p-4 overflow-x-auto text-xs sm:text-sm flex-1">
+          <code className="font-mono text-slate-800 leading-relaxed whitespace-pre">
             {highlightCode(code)}
           </code>
         </pre>

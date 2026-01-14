@@ -117,13 +117,13 @@ export default function Home() {
             transition={{ duration: 0.5 }}
             className="bg-white/80 backdrop-blur-md rounded-2xl p-4 sm:p-8 shadow-lg border border-slate-200"
           >
-            <h1 className="text-2xl sm:text-4xl font-bold mb-2 text-slate-800">
+            <h1 className="text-3xl sm:text-4xl font-bold mb-2 text-slate-800 tracking-tight">
               用<span className="text-blue-600">一套方法</span>
             </h1>
-            <h1 className="text-2xl sm:text-4xl font-bold mb-4 sm:mb-6 text-slate-800">
+            <h1 className="text-3xl sm:text-4xl font-bold mb-4 sm:mb-6 text-slate-800 tracking-tight">
               解决<span className="text-indigo-600">多类题目</span>
             </h1>
-            <p className="text-slate-600 max-w-2xl mb-6 sm:mb-8 text-sm sm:text-base">
+            <p className="text-slate-600 max-w-2xl mb-6 sm:mb-8 text-base sm:text-lg leading-relaxed">
               专为零基础小白设计，从思路分析到代码实现，循循善诱带你掌握算法面试核心技巧。不是死记硬背，而是理解分析问题的思考过程。
             </p>
             
@@ -205,7 +205,7 @@ export default function Home() {
             </div>
             
             {/* Category Cards Grid */}
-            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2 sm:gap-3">
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 sm:gap-4">
               {categories.map((category) => {
                 const isSelected = selectedCategories.includes(category.id);
                 const colors = categoryColors[category.id] || { bg: 'bg-slate-50', border: 'border-slate-200', text: 'text-slate-700', gradient: 'from-slate-400 to-slate-500' };

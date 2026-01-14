@@ -54,7 +54,7 @@ export default function Layout({ children }: LayoutProps) {
             
             {/* Mobile Menu Button */}
             <button 
-              className="md:hidden p-2 rounded-lg text-slate-600 hover:bg-slate-100 transition-colors"
+              className="md:hidden p-2 rounded-lg text-slate-600 hover:bg-slate-100 transition-colors z-50 relative"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             >
               {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
@@ -65,15 +65,23 @@ export default function Layout({ children }: LayoutProps) {
           </div>
         </div>
         
-        {/* Mobile Navigation Menu */}
+        {/* Mobile Navigation Menu Overlay */}
         {mobileMenuOpen && (
-          <div className="md:hidden bg-white border-t border-slate-200 shadow-lg">
-            <nav className="container mx-auto px-4 py-4 flex flex-col gap-2">
+          <div 
+            className="fixed inset-0 bg-black/20 backdrop-blur-sm z-40 md:hidden"
+            onClick={() => setMobileMenuOpen(false)}
+          />
+        )}
+
+        {/* Mobile Navigation Drawer */}
+        <div className={`fixed top-0 right-0 bottom-0 w-64 bg-white shadow-2xl z-40 transform transition-transform duration-300 ease-in-out md:hidden ${mobileMenuOpen ? 'translate-x-0' : 'translate-x-full'}`}>
+          <div className="flex flex-col h-full pt-20 px-4">
+            <nav className="flex flex-col gap-2">
               <Link href="/">
                 <span 
-                  className={`flex items-center gap-2 px-4 py-3 rounded-lg transition-colors cursor-pointer ${
+                  className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all cursor-pointer ${
                     location === '/' 
-                      ? 'bg-blue-50 text-blue-700 font-medium' 
+                      ? 'bg-blue-50 text-blue-600 font-medium shadow-sm' 
                       : 'text-slate-600 hover:bg-slate-50'
                   }`}
                   onClick={() => setMobileMenuOpen(false)}
@@ -83,8 +91,18 @@ export default function Layout({ children }: LayoutProps) {
                 </span>
               </Link>
             </nav>
+            
+            <div className="mt-auto mb-8 px-4">
+              <div className="p-4 rounded-xl bg-slate-50 border border-slate-100">
+                <p className="text-xs text-slate-500 text-center">
+                  明德惟馨的算法通关指南
+                  <br />
+                  大厂面试必备
+                </p>
+              </div>
+            </div>
           </div>
-        )}
+        </div>
       </header>
       
       {/* Main Content */}
