@@ -347,6 +347,27 @@ if (right - left + 1 == p.length()) {
     left++;
 }`,
         explanation: '像相框平移：右边进一个，左边必须出一个，永远保持固定大小。'
+      },
+      {
+        title: '深度解析：无关字符去哪了？',
+        description: '为什么对无关字符 ++/-- 不会影响结果？',
+        code: `// 假设 target="abc", source="dabc"
+// need 初始化: a=1, b=1, c=1, d=0 (关键！无关字符初始为0)
+
+// 1. 进窗口 (Right 遇到 'd')
+// need['d']-- 变成 -1 (表示多余1个)
+// if(need['d'] > 0) 检查失败 (0 > 0 False)，required 不变
+
+// ... 中间经过 a,b,c ...
+
+// 2. 出窗口 (Left 遇到 'd')
+// need['d']++ 变成 0 (恢复平衡)
+// if(need['d'] > 0) 检查失败 (0 > 0 False)，required 不变！
+
+// 结论：
+// 无关字符永远在 0 和 负数 之间变化。
+// 只有目标字符（初始 > 0）才可能触发 required 变化。`,
+        explanation: '这是一个反直觉但设计精妙的细节。无关字符虽然参与运算，但因为初始值为0，它们永远无法跨越“正数”的门槛来触发 required 计数器的变化。'
       }
     ],
     interview: {
