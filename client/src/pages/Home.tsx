@@ -68,6 +68,7 @@ export default function Home() {
     categoryFromUrl ? [categoryFromUrl] : categories.map(c => c.id)
   );
   const [completedProblems, setCompletedProblems] = useState<string[]>([]);
+  const [isCategoriesExpanded, setIsCategoriesExpanded] = useState(false); // 移动端分类折叠状态
   
   useEffect(() => {
     const saved = localStorage.getItem('completedProblems');
@@ -185,78 +186,11 @@ export default function Home() {
                 </div>
               ))}
             </div>
-          </div>
-        </div>
-        
-        {/* Mobile Sticky Category Bar */}
-        <div className="sticky top-16 z-30 bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-sm sm:hidden overflow-x-auto scrollbar-hide">
-          <div className="flex items-center gap-2 p-3 min-w-max">
-            <button
-              onClick={() => setSelectedCategories(categories.map(c => c.id))}
-              className={cn(
-                'px-3 py-1.5 rounded-full text-sm font-medium transition-colors border',
-                selectedCategories.length === categories.length
-                  ? 'bg-slate-800 text-white border-slate-800'
-                  : 'bg-white text-slate-600 border-slate-200'
-              )}
-            >
-              全部
-            </button>
-            {categories.map((category) => {
-              const isSelected = selectedCategories.includes(category.id) && selectedCategories.length < categories.length;
-              return (
-                <button
-                  key={category.id}
-                  onClick={() => {
-                    // 单选逻辑：点击即选中该分类，再次点击不取消（除非切换到其他）
-                    // 如果当前是全选状态，点击则切换到单选
-                    setSelectedCategories([category.id]);
-                  }}
-                  className={cn(
-                    'px-3 py-1.5 rounded-full text-sm font-medium transition-colors border flex items-center gap-1.5',
-                    isSelected
-                      ? 'bg-blue-50 text-blue-600 border-blue-200'
-                      : 'bg-white text-slate-600 border-slate-200'
-                  )}
-                >
-                  <span>{category.icon}</span>
-                  {category.name}
-                </button>
-              );
-            })}
-          </div>
-        </div>
-
-        {/* Desktop Category Selection (Hidden on Mobile) */}
-        <div className="container py-4 sm:py-8 hidden sm:block">
-          <div className="bg-white/80 backdrop-blur-md rounded-2xl p-4 sm:p-6 shadow-lg border border-slate-200 mb-6">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-4 sm:mb-6 gap-2">
-              <div className="flex items-center gap-2 sm:gap-3 flex-wrap">
-                <span className="text-blue-500">▼</span>
-                <h2 className="text-base sm:text-lg font-semibold text-slate-800">选择题目类别</h2>
-                <span className="text-xs sm:text-sm text-slate-500">
-                  已选 {selectedCategories.length} 类，共 {selectedProblemsCount} 题
-                </span>
-              </div>
-              <div className="flex items-center gap-2">
-                <button
-                  onClick={selectAll}
-                  className="text-xs sm:text-sm text-slate-500 hover:text-blue-600 transition-colors"
-                >
-                  全选
-                </button>
-                <span className="text-slate-300">×</span>
-                <button
-                  onClick={clearAll}
-                  className="text-xs sm:text-sm text-slate-500 hover:text-blue-600 transition-colors"
-                >
-                  清空
-                </button>
-              </div>
-            </div>
-            
             {/* Category Cards Grid */}
-            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 sm:gap-4">
+            <div className={cn(
+              "grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 sm:gap-4 transition-all duration-300 ease-in-out overflow-hidden",
+              !isCategoriesExpanded ? "max-h-[180px] sm:max-h-none relative" : ""
+            )}>
               {categories.map((category) => {
                 const isSelected = selectedCategories.includes(category.id);
                 const colors = categoryColors[category.id] || { bg: 'bg-slate-50', border: 'border-slate-200', text: 'text-slate-700', gradient: 'from-slate-400 to-slate-500' };
