@@ -168,7 +168,8 @@ export const problems: Problem[] = [
       { title: '定义方法签名', description: '原地修改数组，无返回值', code: 'public void moveZeroes(int[] nums) {\n    // 待实现\n}', explanation: '返回void，直接修改原数组' },
       { title: '初始化慢指针', description: 'slow指向下一个非零元素应放的位置', code: 'public void moveZeroes(int[] nums) {\n    int slow = 0;\n}', explanation: 'slow从0开始，表示第一个位置' },
       { title: '快指针遍历', description: 'fast遍历整个数组', code: 'public void moveZeroes(int[] nums) {\n    int slow = 0;\n    for (int fast = 0; fast < nums.length; fast++) {\n        // 处理每个元素\n    }\n}', explanation: 'fast负责遍历，slow负责记录位置' },
-      { title: '交换非零元素', description: '遇到非零元素就交换到slow位置', code: 'public void moveZeroes(int[] nums) {\n    int slow = 0;\n    for (int fast = 0; fast < nums.length; fast++) {\n        if (nums[fast] != 0) {\n            int temp = nums[slow];\n            nums[slow] = nums[fast];\n            nums[fast] = temp;\n            slow++;\n        }\n    }\n}', explanation: '交换后slow前进，保证slow左边都是非零元素' }
+      { title: '移动非零元素', description: '遇到非零元素就放到slow位置', code: 'public void moveZeroes(int[] nums) {\n    int slow = 0;\n    for (int fast = 0; fast < nums.length; fast++) {\n        if (nums[fast] != 0) {\n            nums[slow] = nums[fast];\n            slow++;\n        }\n    }\n}', explanation: '直接覆盖，比交换更高效' },
+      { title: '填充剩余零', description: '将slow之后的所有位置填充为0', code: 'public void moveZeroes(int[] nums) {\n    int slow = 0;\n    for (int fast = 0; fast < nums.length; fast++) {\n        if (nums[fast] != 0) {\n            nums[slow] = nums[fast];\n            slow++;\n        }\n    }\n    while (slow < nums.length) {\n        nums[slow++] = 0;\n    }\n}', explanation: '这是关键一步！保证末尾都是0' }
     ],
     interview: {
       approach: '使用快慢双指针，slow维护非零区域的边界，fast遍历数组。遇到非零元素就交换到slow位置，这样所有零自然被移到末尾。',
