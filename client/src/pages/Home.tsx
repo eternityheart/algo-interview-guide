@@ -68,7 +68,6 @@ export default function Home() {
     categoryFromUrl ? [categoryFromUrl] : categories.map(c => c.id)
   );
   const [completedProblems, setCompletedProblems] = useState<string[]>([]);
-  const [isCategoriesExpanded, setIsCategoriesExpanded] = useState(false); // 移动端分类折叠状态
   
   useEffect(() => {
     const saved = localStorage.getItem('completedProblems');
@@ -111,37 +110,25 @@ export default function Home() {
     <Layout>
       <div className="min-h-screen pb-12">
         {/* Hero Section */}
-        <div className="container py-4 sm:py-12">
+        <div className="container py-6 sm:py-12">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
             className="bg-white/80 backdrop-blur-md rounded-2xl p-4 sm:p-8 shadow-lg border border-slate-200"
           >
-            <div className="sm:block hidden">
-              <h1 className="text-3xl sm:text-4xl font-bold mb-2 text-slate-800 tracking-tight">
-                用<span className="text-blue-600">一套方法</span>
-              </h1>
-              <h1 className="text-3xl sm:text-4xl font-bold mb-4 sm:mb-6 text-slate-800 tracking-tight">
-                解决<span className="text-indigo-600">多类题目</span>
-              </h1>
-              <p className="text-slate-600 max-w-2xl mb-6 sm:mb-8 text-base sm:text-lg leading-relaxed">
-                专为零基础小白设计，从思路分析到代码实现，循循善诱带你掌握算法面试核心技巧。不是死记硬背，而是理解分析问题的思考过程。
-              </p>
-            </div>
-            
-            {/* Mobile Simplified Hero */}
-            <div className="sm:hidden mb-2">
-              <h1 className="text-xl font-bold text-slate-800 mb-1">
-                用<span className="text-blue-600">一套方法</span>解决<span className="text-indigo-600">多类题目</span>
-              </h1>
-              <p className="text-xs text-slate-500 line-clamp-2">
-                专为零基础小白设计，从思路分析到代码实现，循循善诱带你掌握算法面试核心技巧。
-              </p>
-            </div>
+            <h1 className="text-3xl sm:text-4xl font-bold mb-2 text-slate-800 tracking-tight">
+              用<span className="text-blue-600">一套方法</span>
+            </h1>
+            <h1 className="text-3xl sm:text-4xl font-bold mb-4 sm:mb-6 text-slate-800 tracking-tight">
+              解决<span className="text-indigo-600">多类题目</span>
+            </h1>
+            <p className="text-slate-600 max-w-2xl mb-6 sm:mb-8 text-base sm:text-lg leading-relaxed">
+              专为零基础小白设计，从思路分析到代码实现，循循善诱带你掌握算法面试核心技巧。不是死记硬背，而是理解分析问题的思考过程。
+            </p>
             
             {/* Decorative Tags - Not Selectable */}
-            <div className="flex flex-wrap gap-2 sm:gap-3 max-h-20 sm:max-h-none overflow-hidden sm:overflow-visible">
+            <div className="flex flex-wrap gap-2 sm:gap-3">
               {decorativeTags.map((tag, index) => (
                 <motion.div
                   key={tag.name}
@@ -161,8 +148,8 @@ export default function Home() {
           </motion.div>
         </div>
         
-        {/* Learning Path - Hidden on Mobile to save space */}
-        <div className="container py-4 sm:py-8 hidden sm:block">
+        {/* Learning Path */}
+        <div className="container py-4 sm:py-8">
           <div className="bg-white/80 backdrop-blur-md rounded-2xl p-4 sm:p-6 shadow-lg border border-slate-200">
             <h2 className="text-base sm:text-lg font-semibold mb-4 sm:mb-6 text-slate-800">学习路径</h2>
             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 sm:gap-0 max-w-4xl">
@@ -186,11 +173,39 @@ export default function Home() {
                 </div>
               ))}
             </div>
+          </div>
+        </div>
+        
+        {/* Category Selection */}
+        <div className="container py-4 sm:py-8">
+          <div className="bg-white/80 backdrop-blur-md rounded-2xl p-4 sm:p-6 shadow-lg border border-slate-200 mb-6">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-4 sm:mb-6 gap-2">
+              <div className="flex items-center gap-2 sm:gap-3 flex-wrap">
+                <span className="text-blue-500">▼</span>
+                <h2 className="text-base sm:text-lg font-semibold text-slate-800">选择题目类别</h2>
+                <span className="text-xs sm:text-sm text-slate-500">
+                  已选 {selectedCategories.length} 类，共 {selectedProblemsCount} 题
+                </span>
+              </div>
+              <div className="flex items-center gap-2">
+                <button
+                  onClick={selectAll}
+                  className="text-xs sm:text-sm text-slate-500 hover:text-blue-600 transition-colors"
+                >
+                  全选
+                </button>
+                <span className="text-slate-300">×</span>
+                <button
+                  onClick={clearAll}
+                  className="text-xs sm:text-sm text-slate-500 hover:text-blue-600 transition-colors"
+                >
+                  清空
+                </button>
+              </div>
+            </div>
+            
             {/* Category Cards Grid */}
-            <div className={cn(
-              "grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 sm:gap-4 transition-all duration-300 ease-in-out overflow-hidden",
-              !isCategoriesExpanded ? "max-h-[180px] sm:max-h-none relative" : ""
-            )}>
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 sm:gap-4">
               {categories.map((category) => {
                 const isSelected = selectedCategories.includes(category.id);
                 const colors = categoryColors[category.id] || { bg: 'bg-slate-50', border: 'border-slate-200', text: 'text-slate-700', gradient: 'from-slate-400 to-slate-500' };
