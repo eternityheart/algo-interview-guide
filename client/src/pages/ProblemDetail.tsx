@@ -3,11 +3,18 @@ import { Link, useParams, useLocation } from 'wouter';
 import { useState, useEffect } from 'react';
 import { allProblems, categories, Problem, CodeStep } from '@/data/problems';
 import { Button } from '@/components/ui/button';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import { 
   ChevronLeft, 
   ChevronRight, 
   ChevronDown,
   ChevronUp,
+  Menu,
   Lightbulb,
   Sparkles,
   Clock,
@@ -257,10 +264,36 @@ export default function ProblemDetail() {
                 )}>
                   {problem.difficulty === 'easy' ? '简单' : problem.difficulty === 'medium' ? '中等' : '困难'}
                 </span>
-                <span className="text-sm text-slate-400 hidden sm:flex items-center gap-1">
-                  <span className="text-blue-600">{category?.icon}</span>
-                  {category?.name}
-                </span>
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button variant="ghost" size="sm" className="text-sm text-slate-500 hover:text-slate-800 flex items-center gap-1 px-2">
+                      <span className="text-blue-600">{category?.icon}</span>
+                      {category?.name}
+                      <ChevronDown className="w-3 h-3 ml-1 opacity-50" />
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="start" className="w-48 max-h-[60vh] overflow-y-auto">
+                    {categories.map((c) => (
+                      <DropdownMenuItem 
+                        key={c.id}
+                        onClick={() => {
+                          // 找到该分类下的第一个题目
+                          const firstProblem = allProblems.find(p => p.category === c.id);
+                          if (firstProblem) {
+                            setLocation(`/problem/${firstProblem.id}`);
+                          }
+                        }}
+                        className={cn(
+                          "flex items-center gap-2 cursor-pointer",
+                          c.id === category?.id && "bg-slate-100"
+                        )}
+                      >
+                        <span className="text-blue-600 w-5 text-center">{c.icon}</span>
+                        <span>{c.name}</span>
+                      </DropdownMenuItem>
+                    ))}
+                  </DropdownMenuContent>
+                </DropdownMenu>
               </div>
               
               <div className="flex items-center gap-2">
