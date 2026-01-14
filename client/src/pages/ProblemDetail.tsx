@@ -20,6 +20,33 @@ import { cn } from '@/lib/utils';
 
 type TabType = 'thinking' | 'code' | 'solution' | 'interview';
 
+// 简单的 Markdown 渲染组件
+function MarkdownText({ content }: { content: string }) {
+  if (!content) return null;
+  
+  // 处理换行符：将 \n 替换为实际的换行
+  const lines = content.split(/\\n|\n/);
+  
+  return (
+    <div className="space-y-2">
+      {lines.map((line, i) => {
+        // 处理加粗：**text**
+        const parts = line.split(/(\*\*[^*]+\*\*)/g);
+        return (
+          <p key={i} className="min-h-[1.5em]">
+            {parts.map((part, j) => {
+              if (part.startsWith('**') && part.endsWith('**')) {
+                return <strong key={j} className="font-semibold text-slate-800">{part.slice(2, -2)}</strong>;
+              }
+              return <span key={j}>{part}</span>;
+            })}
+          </p>
+        );
+      })}
+    </div>
+  );
+}
+
 // 代码高亮组件 - 浅色背景
 function CodeBlock({ code, fileName }: { code: string; fileName?: string }) {
   const [copied, setCopied] = useState(false);
@@ -601,9 +628,9 @@ export default function ProblemDetail() {
                             <span className="text-blue-600">💡</span>
                             面试讲解思路
                           </h4>
-                          <p className="text-slate-600 leading-relaxed">
-                            {problem.interview.approach}
-                          </p>
+                          <div className="text-slate-600 leading-relaxed">
+                            <MarkdownText content={problem.interview.approach} />
+                          </div>
                         </div>
                         
                         {/* Complexity */}
