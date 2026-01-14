@@ -360,18 +360,29 @@ export default function ProblemDetail() {
                     {isCompleted ? (
                       <>
                         <Check className="w-3.5 h-3.5" />
-                        已掌握
+                        <span className="hidden sm:inline">已掌握</span>
                       </>
                     ) : (
                       <>
                         <span className="w-3.5 h-3.5 rounded-full border border-current opacity-60" />
-                        未掌握
+                        <span className="hidden sm:inline">未掌握</span>
                       </>
                     )}
                   </Button>
-                  <span className="text-xs font-medium text-green-600 bg-green-50 px-2 py-0.5 rounded-full">
-                    {progress.completed}/{progress.total}
-                  </span>
+                  
+                  {/* Global Progress Bar in Navbar */}
+                  <div className="hidden sm:flex flex-col w-32 gap-1">
+                    <div className="flex items-center justify-between text-[10px] leading-none">
+                      <span className="text-slate-400">总进度</span>
+                      <span className="font-medium text-blue-600">{globalProgress.completed}/{globalProgress.total}</span>
+                    </div>
+                    <div className="h-1.5 bg-slate-100 rounded-full overflow-hidden">
+                      <div 
+                        className="h-full bg-gradient-to-r from-blue-500 to-cyan-400 rounded-full transition-all duration-500 ease-out"
+                        style={{ width: `${(globalProgress.completed / globalProgress.total) * 100}%` }}
+                      />
+                    </div>
+                  </div>
                 </div>
               </div>
               
@@ -412,8 +423,8 @@ export default function ProblemDetail() {
             {/* Left Column - Problem Description (100% on mobile, 30% on desktop) */}
             <div className="w-full lg:w-[30%] flex-shrink-0">
               <div className="lg:sticky lg:top-36 space-y-4">
-                {/* Global Progress Bar */}
-                <div className="bg-white/90 backdrop-blur-sm rounded-xl p-4 shadow-lg border border-slate-200">
+                {/* Global Progress Bar - Mobile Only */}
+                <div className="block sm:hidden bg-white/90 backdrop-blur-sm rounded-xl p-4 shadow-lg border border-slate-200">
                   <div className="flex items-center justify-between mb-2">
                     <span className="text-xs font-medium text-slate-500">总进度</span>
                     <span className="text-xs font-bold text-blue-600">{globalProgress.completed}/{globalProgress.total}</span>

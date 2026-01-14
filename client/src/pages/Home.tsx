@@ -117,12 +117,26 @@ export default function Home() {
             transition={{ duration: 0.5 }}
             className="bg-white/80 backdrop-blur-md rounded-2xl p-4 sm:p-8 shadow-lg border border-slate-200"
           >
-            <h1 className="text-3xl sm:text-4xl font-bold mb-2 text-slate-800 tracking-tight">
-              用<span className="text-blue-600">一套方法</span>
-            </h1>
-            <h1 className="text-3xl sm:text-4xl font-bold mb-4 sm:mb-6 text-slate-800 tracking-tight">
-              解决<span className="text-indigo-600">多类题目</span>
-            </h1>
+            {/* Mobile Title */}
+            <div className="block sm:hidden mb-4">
+              <div className="flex items-center gap-2 mb-1">
+                <div className="bg-blue-600 text-white p-1.5 rounded-lg">
+                  <Code2 className="w-5 h-5" />
+                </div>
+                <h1 className="text-xl font-bold text-slate-900">明德惟馨的算法通关指南</h1>
+              </div>
+              <p className="text-sm text-slate-500 pl-[2.75rem]">大厂面试必备</p>
+            </div>
+
+            {/* Desktop Title */}
+            <div className="hidden sm:block">
+              <h1 className="text-3xl sm:text-4xl font-bold mb-2 text-slate-800 tracking-tight">
+                用<span className="text-blue-600">一套方法</span>
+              </h1>
+              <h1 className="text-3xl sm:text-4xl font-bold mb-4 sm:mb-6 text-slate-800 tracking-tight">
+                解决<span className="text-indigo-600">多类题目</span>
+              </h1>
+            </div>
             <p className="text-slate-600 max-w-2xl mb-6 sm:mb-8 text-base sm:text-lg leading-relaxed">
               专为零基础小白设计，从思路分析到代码实现，循循善诱带你掌握算法面试核心技巧。不是死记硬背，而是理解分析问题的思考过程。
             </p>
