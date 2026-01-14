@@ -213,31 +213,31 @@ export default function ProblemDetail() {
       <div className="min-h-screen">
         {/* Top Navigation Bar */}
         <div className="sticky top-16 z-40 bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-lg">
-          <div className="container">
+          <div className="container px-4">
             <div className="flex items-center justify-between h-14">
-              <div className="flex items-center gap-4">
+              <div className="flex items-center gap-2 sm:gap-4">
                 <Link href={`/?category=${problem.category}`}>
-                  <Button variant="ghost" size="sm" className="gap-2 text-slate-600 hover:text-slate-800 hover:bg-slate-100">
+                  <Button variant="ghost" size="sm" className="gap-1 sm:gap-2 text-slate-600 hover:text-slate-800 hover:bg-slate-100 px-2 sm:px-4">
                     <ChevronLeft className="w-4 h-4" />
-                    返回
+                    <span className="hidden sm:inline">返回</span>
                   </Button>
                 </Link>
                 <span className={cn(
-                  'text-xs px-2 py-1 rounded font-medium',
+                  'text-xs px-2 py-1 rounded font-medium whitespace-nowrap',
                   problem.difficulty === 'easy' && 'bg-green-500/20 text-green-600',
                   problem.difficulty === 'medium' && 'bg-amber-500/20 text-amber-400',
                   problem.difficulty === 'hard' && 'bg-red-500/20 text-red-400'
                 )}>
                   {problem.difficulty === 'easy' ? '简单' : problem.difficulty === 'medium' ? '中等' : '困难'}
                 </span>
-                <span className="text-sm text-slate-400 flex items-center gap-1">
+                <span className="text-sm text-slate-400 hidden sm:flex items-center gap-1">
                   <span className="text-blue-600">{category?.icon}</span>
                   {category?.name}
                 </span>
               </div>
               
               <div className="flex items-center gap-2">
-                <span className="text-sm text-slate-500">
+                <span className="text-xs sm:text-sm text-slate-500 whitespace-nowrap">
                   {currentIndex + 1} / {categoryProblems.length}
                 </span>
                 <div className="flex items-center gap-1">
@@ -246,19 +246,19 @@ export default function ProblemDetail() {
                     size="sm"
                     disabled={!prevProblem}
                     onClick={() => prevProblem && setLocation(`/problem/${prevProblem.id}`)}
-                    className="text-slate-400 hover:text-slate-800 hover:bg-slate-100 disabled:opacity-50"
+                    className="text-slate-400 hover:text-slate-800 hover:bg-slate-100 disabled:opacity-50 px-2"
                   >
                     <ChevronLeft className="w-4 h-4" />
-                    上一题
+                    <span className="hidden sm:inline ml-1">上一题</span>
                   </Button>
                   <Button
                     variant="ghost"
                     size="sm"
                     disabled={!nextProblem}
                     onClick={() => nextProblem && setLocation(`/problem/${nextProblem.id}`)}
-                    className="text-slate-400 hover:text-slate-800 hover:bg-slate-100 disabled:opacity-50"
+                    className="text-slate-400 hover:text-slate-800 hover:bg-slate-100 disabled:opacity-50 px-2"
                   >
-                    下一题
+                    <span className="hidden sm:inline mr-1">下一题</span>
                     <ChevronRight className="w-4 h-4" />
                   </Button>
                 </div>
@@ -267,12 +267,12 @@ export default function ProblemDetail() {
           </div>
         </div>
         
-        {/* Main Content - Two Column Layout */}
-        <div className="container py-6">
-          <div className="flex gap-6">
-            {/* Left Column - Problem Description (30%) */}
-            <div className="w-[30%] flex-shrink-0">
-              <div className="sticky top-36 space-y-4">
+        {/* Main Content - Responsive Layout */}
+        <div className="container py-4 sm:py-6 px-4">
+          <div className="flex flex-col lg:flex-row gap-6">
+            {/* Left Column - Problem Description (100% on mobile, 30% on desktop) */}
+            <div className="w-full lg:w-[30%] flex-shrink-0">
+              <div className="lg:sticky lg:top-36 space-y-4">
                 {/* Problem Title */}
                 <div className="bg-white/90 backdrop-blur-sm rounded-xl p-5 shadow-lg border border-slate-200">
                   <h1 className="text-xl font-bold mb-3 text-slate-800">{problem.title}</h1>
@@ -332,24 +332,24 @@ export default function ProblemDetail() {
               </div>
             </div>
             
-            {/* Right Column - Learning Content (70%) */}
-            <div className="flex-1 min-w-0">
+            {/* Right Column - Learning Content (100% on mobile, 70% on desktop) */}
+            <div className="w-full lg:flex-1 min-w-0">
               {/* Tabs */}
               <div className="bg-white/90 backdrop-blur-sm rounded-xl border border-slate-200 shadow-lg">
-                <div className="flex border-b border-slate-200">
+                <div className="flex border-b border-slate-200 overflow-x-auto scrollbar-hide">
                   {tabs.map((tab) => (
                     <button
                       key={tab.id}
                       onClick={() => setActiveTab(tab.id)}
                       className={cn(
-                        'flex-1 px-4 py-3 text-sm font-medium transition-colors relative',
+                        'flex-1 min-w-[80px] px-2 sm:px-4 py-3 text-xs sm:text-sm font-medium transition-colors relative whitespace-nowrap',
                         activeTab === tab.id
                           ? 'text-blue-600'
                           : 'text-slate-500 hover:text-slate-600'
                       )}
                     >
-                      <span className="flex items-center justify-center gap-2">
-                        <span>{tab.icon}</span>
+                      <span className="flex flex-col sm:flex-row items-center justify-center gap-1 sm:gap-2">
+                        <span className="text-base sm:text-lg">{tab.icon}</span>
                         {tab.label}
                       </span>
                       {activeTab === tab.id && (
@@ -460,7 +460,7 @@ export default function ProblemDetail() {
                       </motion.div>
                     )}
                     
-                    {/* Code Implementation Tab - 3:7 Layout */}
+                    {/* Code Implementation Tab - Responsive Layout */}
                     {activeTab === 'code' && (
                       <motion.div
                         key="code"
@@ -468,31 +468,23 @@ export default function ProblemDetail() {
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: -10 }}
                       >
-                        <div className="flex gap-4">
-                          {/* Left: Step List (25%) */}
-                          <div className="w-[25%] flex-shrink-0">
-                            <h4 className="text-lg font-bold text-blue-600 mb-4">代码构建步骤</h4>
-                            <div className="space-y-1">
+                        <div className="flex flex-col lg:flex-row gap-4">
+                          {/* Left: Step List (100% on mobile, 25% on desktop) */}
+                          <div className="w-full lg:w-[25%] flex-shrink-0">
+                            <h4 className="text-base sm:text-lg font-bold text-blue-600 mb-2 sm:mb-4">代码构建步骤</h4>
+                            <div className="flex lg:flex-col overflow-x-auto lg:overflow-visible gap-2 lg:gap-1 pb-2 lg:pb-0 scrollbar-hide">
                               {problem.codeSteps.map((step, index) => (
                                 <button
                                   key={index}
                                   onClick={() => setCurrentCodeStep(index)}
                                   className={cn(
-                                    'w-full px-3 py-2 rounded-lg text-left text-sm transition-colors flex items-center gap-2',
+                                    'flex-shrink-0 whitespace-nowrap lg:whitespace-normal px-3 py-2 rounded-lg text-sm text-left transition-colors border',
                                     currentCodeStep === index
-                                      ? 'bg-blue-100 text-blue-600 border border-blue-300'
-                                      : 'hover:bg-slate-100 text-slate-400 border border-transparent'
+                                      ? 'bg-blue-50 text-blue-700 border-blue-200 font-medium'
+                                      : 'hover:bg-slate-50 text-slate-600 border-transparent'
                                   )}
                                 >
-                                  <span className={cn(
-                                    'w-5 h-5 rounded-full flex items-center justify-center text-xs font-medium flex-shrink-0',
-                                    currentCodeStep === index
-                                      ? 'bg-blue-600 text-slate-800'
-                                      : 'bg-slate-200 text-slate-400'
-                                  )}>
-                                    {index + 1}
-                                  </span>
-                                  <span className="text-sm font-medium truncate">{step.title}</span>
+                                  {index + 1}. {step.title}
                                 </button>
                               ))}
                             </div>
