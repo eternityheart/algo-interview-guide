@@ -179,6 +179,7 @@ export default function ProblemDetail() {
   const [showHints, setShowHints] = useState<{ [key: number]: boolean }>({});
   const [showAnswers, setShowAnswers] = useState<{ [key: number]: boolean }>({});
   const [currentCodeStep, setCurrentCodeStep] = useState(0);
+  const [isCompleted, setIsCompleted] = useState(false);
   
   const problem = allProblems.find(p => p.id === id);
   const category = problem ? categories.find(c => c.id === problem.category) : null;
@@ -187,6 +188,51 @@ export default function ProblemDetail() {
   const categoryProblems = problem 
     ? allProblems.filter(p => p.category === problem.category)
     : [];
+
+  // Load completion status
+  useEffect(() => {
+    if (id) {
+      const completed = localStorage.getItem(`problem-${id}-completed`) === 'true';
+      setIsCompleted(completed);
+    }
+  }, [id]);
+
+  // Toggle completion status
+  const toggleCompletion = () => {
+    if (!id) return;
+    const newStatus = !isCompleted;
+    setIsCompleted(newStatus);
+    localStorage.setItem(`problem-${id}-completed`, String(newStatus));
+    // Trigger a storage event to update other components if needed
+    window.dispatchEvent(new Event('storage'));
+  };
+
+  // Calculate category progress
+  const getCategoryProgress = () => {
+    if (!categoryProblems.length) return { completed: 0, total: 0 };
+    const completedCount = categoryProblems.filter(p => 
+      localStorage.getItem(`problem-${p.id}-completed`) === 'true' || 
+      (p.id === id && isCompleted) // Include current problem if completed
+    ).length;
+    // If current problem was counted from localStorage but is now uncompleted, adjust count
+    const storedCurrent = localStorage.getItem(`problem-${id}-completed`) === 'true';
+    const finalCount = (storedCurrent === isCompleted) ? completedCount : 
+                      (isCompleted ? completedCount : completedCount - 1);
+    
+    // Simplification: just recalculate from scratch to be safe
+    let count = 0;
+    categoryProblems.forEach(p => {
+      if (p.id === id) {
+        if (isCompleted) count++;
+      } else {
+        if (localStorage.getItem(`problem-${p.id}-completed`) === 'true') count++;
+      }
+    });
+    
+    return { completed: count, total: categoryProblems.length };
+  };
+
+  const progress = getCategoryProgress();
   const currentIndex = categoryProblems.findIndex(p => p.id === id);
   const prevProblem = currentIndex > 0 ? categoryProblems[currentIndex - 1] : null;
   const nextProblem = currentIndex < categoryProblems.length - 1 ? categoryProblems[currentIndex + 1] : null;
@@ -294,6 +340,36 @@ export default function ProblemDetail() {
                     ))}
                   </DropdownMenuContent>
                 </DropdownMenu>
+
+                {/* Completion Status Toggle */}
+                <div className="flex items-center gap-2 ml-2 sm:ml-4 border-l border-slate-200 pl-2 sm:pl-4">
+                  <Button
+                    variant={isCompleted ? "default" : "outline"}
+                    size="sm"
+                    onClick={toggleCompletion}
+                    className={cn(
+                      "h-7 text-xs gap-1.5 transition-all",
+                      isCompleted 
+                        ? "bg-green-500 hover:bg-green-600 text-white border-transparent" 
+                        : "text-slate-500 border-slate-200 hover:border-green-500 hover:text-green-600"
+                    )}
+                  >
+                    {isCompleted ? (
+                      <>
+                        <Check className="w-3.5 h-3.5" />
+                        已掌握
+                      </>
+                    ) : (
+                      <>
+                        <span className="w-3.5 h-3.5 rounded-full border border-current opacity-60" />
+                        未掌握
+                      </>
+                    )}
+                  </Button>
+                  <span className="text-xs font-medium text-green-600 bg-green-50 px-2 py-0.5 rounded-full">
+                    {progress.completed}/{progress.total}
+                  </span>
+                </div>
               </div>
               
               <div className="flex items-center gap-2">
