@@ -110,25 +110,37 @@ export default function Home() {
     <Layout>
       <div className="min-h-screen pb-12">
         {/* Hero Section */}
-        <div className="container py-6 sm:py-12">
+        <div className="container py-4 sm:py-12">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
             className="bg-white/80 backdrop-blur-md rounded-2xl p-4 sm:p-8 shadow-lg border border-slate-200"
           >
-            <h1 className="text-3xl sm:text-4xl font-bold mb-2 text-slate-800 tracking-tight">
-              用<span className="text-blue-600">一套方法</span>
-            </h1>
-            <h1 className="text-3xl sm:text-4xl font-bold mb-4 sm:mb-6 text-slate-800 tracking-tight">
-              解决<span className="text-indigo-600">多类题目</span>
-            </h1>
-            <p className="text-slate-600 max-w-2xl mb-6 sm:mb-8 text-base sm:text-lg leading-relaxed">
-              专为零基础小白设计，从思路分析到代码实现，循循善诱带你掌握算法面试核心技巧。不是死记硬背，而是理解分析问题的思考过程。
-            </p>
+            <div className="sm:block hidden">
+              <h1 className="text-3xl sm:text-4xl font-bold mb-2 text-slate-800 tracking-tight">
+                用<span className="text-blue-600">一套方法</span>
+              </h1>
+              <h1 className="text-3xl sm:text-4xl font-bold mb-4 sm:mb-6 text-slate-800 tracking-tight">
+                解决<span className="text-indigo-600">多类题目</span>
+              </h1>
+              <p className="text-slate-600 max-w-2xl mb-6 sm:mb-8 text-base sm:text-lg leading-relaxed">
+                专为零基础小白设计，从思路分析到代码实现，循循善诱带你掌握算法面试核心技巧。不是死记硬背，而是理解分析问题的思考过程。
+              </p>
+            </div>
+            
+            {/* Mobile Simplified Hero */}
+            <div className="sm:hidden mb-2">
+              <h1 className="text-xl font-bold text-slate-800 mb-1">
+                用<span className="text-blue-600">一套方法</span>解决<span className="text-indigo-600">多类题目</span>
+              </h1>
+              <p className="text-xs text-slate-500 line-clamp-2">
+                专为零基础小白设计，从思路分析到代码实现，循循善诱带你掌握算法面试核心技巧。
+              </p>
+            </div>
             
             {/* Decorative Tags - Not Selectable */}
-            <div className="flex flex-wrap gap-2 sm:gap-3">
+            <div className="flex flex-wrap gap-2 sm:gap-3 max-h-20 sm:max-h-none overflow-hidden sm:overflow-visible">
               {decorativeTags.map((tag, index) => (
                 <motion.div
                   key={tag.name}
@@ -148,8 +160,8 @@ export default function Home() {
           </motion.div>
         </div>
         
-        {/* Learning Path */}
-        <div className="container py-4 sm:py-8">
+        {/* Learning Path - Hidden on Mobile to save space */}
+        <div className="container py-4 sm:py-8 hidden sm:block">
           <div className="bg-white/80 backdrop-blur-md rounded-2xl p-4 sm:p-6 shadow-lg border border-slate-200">
             <h2 className="text-base sm:text-lg font-semibold mb-4 sm:mb-6 text-slate-800">学习路径</h2>
             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 sm:gap-0 max-w-4xl">
@@ -176,8 +188,47 @@ export default function Home() {
           </div>
         </div>
         
-        {/* Category Selection */}
-        <div className="container py-4 sm:py-8">
+        {/* Mobile Sticky Category Bar */}
+        <div className="sticky top-16 z-30 bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-sm sm:hidden overflow-x-auto scrollbar-hide">
+          <div className="flex items-center gap-2 p-3 min-w-max">
+            <button
+              onClick={() => setSelectedCategories(categories.map(c => c.id))}
+              className={cn(
+                'px-3 py-1.5 rounded-full text-sm font-medium transition-colors border',
+                selectedCategories.length === categories.length
+                  ? 'bg-slate-800 text-white border-slate-800'
+                  : 'bg-white text-slate-600 border-slate-200'
+              )}
+            >
+              全部
+            </button>
+            {categories.map((category) => {
+              const isSelected = selectedCategories.includes(category.id) && selectedCategories.length < categories.length;
+              return (
+                <button
+                  key={category.id}
+                  onClick={() => {
+                    // 单选逻辑：点击即选中该分类，再次点击不取消（除非切换到其他）
+                    // 如果当前是全选状态，点击则切换到单选
+                    setSelectedCategories([category.id]);
+                  }}
+                  className={cn(
+                    'px-3 py-1.5 rounded-full text-sm font-medium transition-colors border flex items-center gap-1.5',
+                    isSelected
+                      ? 'bg-blue-50 text-blue-600 border-blue-200'
+                      : 'bg-white text-slate-600 border-slate-200'
+                  )}
+                >
+                  <span>{category.icon}</span>
+                  {category.name}
+                </button>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* Desktop Category Selection (Hidden on Mobile) */}
+        <div className="container py-4 sm:py-8 hidden sm:block">
           <div className="bg-white/80 backdrop-blur-md rounded-2xl p-4 sm:p-6 shadow-lg border border-slate-200 mb-6">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-4 sm:mb-6 gap-2">
               <div className="flex items-center gap-2 sm:gap-3 flex-wrap">
