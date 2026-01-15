@@ -8,14 +8,22 @@ import { defineConfig } from "vite";
 // import runtimePlugin from "vite-plugin-manus-runtime";
 
 const plugins = [
-  react(), 
-  tailwindcss(), 
+  react(),
+  tailwindcss(),
   jsxLocPlugin(),
   // runtimePlugin()
 ];
 
+// 根据部署环境选择 base 路径
+// GitHub Pages 需要 /algo-interview-guide/，Vercel 使用 /
+const getBase = () => {
+  if (process.env.VERCEL) return '/';
+  if (process.env.GITHUB_ACTIONS) return '/algo-interview-guide/';
+  return '/';
+};
+
 export default defineConfig({
-  base: '/algo-interview-guide/',
+  base: getBase(),
   plugins,
   resolve: {
     alias: {
