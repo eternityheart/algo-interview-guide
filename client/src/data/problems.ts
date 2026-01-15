@@ -878,24 +878,61 @@ if (right - left + 1 == k) {
       {
         title: '第1步：主方法框架',
         description: '初始化并调用回溯',
-        code: 'public List<List<Integer>> combinationSum(int[] candidates, int target) {\\n    List<List<Integer>> result = new ArrayList<>();\\n    // 可选优化：Arrays.sort(candidates);\\n    backtrack(candidates, target, 0, new ArrayList<>(), result);\\n    return result;\\n}',
+        code: `public List<List<Integer>> combinationSum(int[] candidates, int target) {
+    List<List<Integer>> result = new ArrayList<>();
+    // 可选优化：Arrays.sort(candidates);
+    backtrack(candidates, target, 0, new ArrayList<>(), result);
+    return result;
+}`,
         explanation: '💡 排序是可选的优化，可以让剪枝更高效。\\n🤔 初始remain就是target（还需要凑的数）。'
       },
       {
         title: '第2步：回溯函数——两个终止条件',
         description: '凑够了或超了都要停止',
-        code: 'private void backtrack(int[] candidates, int remain, int start,\\n                       List<Integer> path, List<List<Integer>> result) {\\n    if (remain < 0) return;  // 剪枝：超过target了\\n    if (remain == 0) {       // 正好凑够\\n        result.add(new ArrayList<>(path));\\n        return;\\n    }\\n    // TODO: 遍历选择\\n}',
+        code: `private void backtrack(int[] candidates, int remain, int start,
+                       List<Integer> path, List<List<Integer>> result) {
+    if (remain < 0) return;  // 剪枝：超过target了
+    if (remain == 0) {       // 正好凑够
+        result.add(new ArrayList<>(path));
+        return;
+    }
+    // TODO: 遍历选择
+}`,
         explanation: '⭐ 用remain（剩余值）比用sum（当前和）更直观。\\n🤔 remain=0说明path里的数加起来正好等于target。'
       },
       {
         title: '第3步：遍历选择（可重复选自己）',
         description: '从start开始，递归传i不是i+1',
-        code: 'private void backtrack(int[] candidates, int remain, int start,\\n                       List<Integer> path, List<List<Integer>> result) {\\n    if (remain < 0) return;\\n    if (remain == 0) {\\n        result.add(new ArrayList<>(path));\\n        return;\\n    }\\n    \\n    for (int i = start; i < candidates.length; i++) {\\n        path.add(candidates[i]);\\n        // 关键：传i不是i+1，允许重复使用\\n        backtrack(candidates, remain - candidates[i], i, path, result);\\n        path.remove(path.size() - 1);\\n    }\\n}',
+        code: `private void backtrack(int[] candidates, int remain, int start,
+                       List<Integer> path, List<List<Integer>> result) {
+    if (remain < 0) return;
+    if (remain == 0) {
+        result.add(new ArrayList<>(path));
+        return;
+    }
+    
+    for (int i = start; i < candidates.length; i++) {
+        path.add(candidates[i]);
+        // 关键：传i不是i+1，允许重复使用
+        backtrack(candidates, remain - candidates[i], i, path, result);
+        path.remove(path.size() - 1);
+    }
+}`,
         explanation: '🎯 核心区别就在这里！\\n子集/排列：backtrack(..., i+1, ...)\\n组合总和：backtrack(..., i, ...)\\n\\n传i意味着下次还可以选candidates[i]。'
       }
     ],
     interview: {
-      approach: '【面试回答模板】\\n\\n这道题用回溯法解决。\\n\\n核心特点：元素可以重复使用。所以递归时传i而不是i+1。\\n\\n用remain记录还需要凑多少。remain==0时收集结果，remain<0时剪枝。\\n\\n用start参数保证只往后或往自己选，避免重复组合。\\n\\n可选优化：先排序，当candidates[i]>remain时直接break。',
+      approach: `【面试回答模板】
+
+这道题用回溯法解决。
+
+核心特点：元素可以重复使用。所以递归时传i而不是i+1。
+
+用remain记录还需要凑多少。remain==0时收集结果，remain<0时剪枝。
+
+用start参数保证只往后或往自己选，避免重复组合。
+
+可选优化：先排序，当candidates[i]>remain时直接break。`,
       timeComplexity: 'O(n^(target/min))。最坏情况用最小的数凑target，递归深度是target/min。',
       spaceComplexity: 'O(target/min)。递归栈深度。',
       followUp: [
@@ -958,30 +995,82 @@ if (right - left + 1 == k) {
       {
         title: '第1步：主方法框架',
         description: '初始化',
-        code: 'public List<String> generateParenthesis(int n) {\\n    List<String> result = new ArrayList<>();\\n    // 从0个左括号、0个右括号开始\\n    backtrack(n, 0, 0, new StringBuilder(), result);\\n    return result;\\n}',
+        code: `public List<String> generateParenthesis(int n) {
+    List<String> result = new ArrayList<>();
+    // 从0个左括号、0个右括号开始
+    backtrack(n, 0, 0, new StringBuilder(), result);
+    return result;
+}`,
         explanation: '💡 使用StringBuilder因为需要频繁修改字符串。'
       },
       {
         title: '第2步：回溯函数——终止条件',
         description: '找够了就返回',
-        code: 'private void backtrack(int n, int left, int right,\\n                       StringBuilder path, List<String> result) {\\n    // 终止条件：总长度达到2n\\n    if (path.length() == 2 * n) {\\n        result.add(path.toString());\\n        return;\\n    }\\n    // TODO: 尝试放左括号或右括号\\n}',
+        code: `private void backtrack(int n, int left, int right,
+                       StringBuilder path, List<String> result) {
+    // 终止条件：总长度达到2n
+    if (path.length() == 2 * n) {
+        result.add(path.toString());
+        return;
+    }
+    // TODO: 尝试放左括号或右括号
+}`,
         explanation: '🤔 为什么是2*n？因为n对括号意味着总共2n个字符。'
       },
       {
         title: '第3步：尝试放左括号',
         description: '只要没超限额就能放',
-        code: 'private void backtrack(int n, int left, int right,\\n                       StringBuilder path, List<String> result) {\\n    if (path.length() == 2 * n) {\\n        result.add(path.toString());\\n        return;\\n    }\\n    \\n    // 只要左括号不够n个，就可以放\\n    if (left < n) {\\n        path.append(\\\'(\\\');\\n        backtrack(n, left + 1, right, path, result);\\n        path.deleteCharAt(path.length() - 1); // 撤销\\n    }\\n    \\n    // TODO: 尝试放右括号\\n}',
+        code: `private void backtrack(int n, int left, int right,
+                       StringBuilder path, List<String> result) {
+    if (path.length() == 2 * n) {
+        result.add(path.toString());
+        return;
+    }
+    
+    // 只要左括号不够n个，就可以放
+    if (left < n) {
+        path.append('(');
+        backtrack(n, left + 1, right, path, result);
+        path.deleteCharAt(path.length() - 1); // 撤销
+    }
+    
+    // TODO: 尝试放右括号
+}`,
         explanation: '💡 left + 1 表示又用掉了一个左括号额度。'
       },
       {
         title: '第4步：尝试放右括号',
         description: '必须有未闭合的左括号才能放',
-        code: 'private void backtrack(int n, int left, int right,\\n                       StringBuilder path, List<String> result) {\\n    // ...前文省略...\\n    \\n    if (left < n) { ... }\\n    \\n    // 只有右括号少于左括号时，才能放\\n    if (right < left) {\\n        path.append(\\\')\\\');\\n        backtrack(n, left, right + 1, path, result);\\n        path.deleteCharAt(path.length() - 1);\\n    }\\n}',
+        code: `private void backtrack(int n, int left, int right,
+                       StringBuilder path, List<String> result) {
+    // ...前文省略...
+    
+    if (left < n) { ... }
+    
+    // 只有右括号少于左括号时，才能放
+    if (right < left) {
+        path.append(')');
+        backtrack(n, left, right + 1, path, result);
+        path.deleteCharAt(path.length() - 1);
+    }
+}`,
         explanation: '🎯 核心剪枝：right < left 保证了括号的有效性。如果right==left，再放右括号就变成")..."，非法！'
       }
     ],
     interview: {
-      approach: '【面试回答模板】\\n\\n这道题用回溯法生成。\\n\\n核心在于维护两个计数器：left（已放左括号数）和right（已放右括号数）。\\n\\n每次递归有两个选择：\\n1. 如果left < n，可以放左括号。\\n2. 如果right < left，可以放右括号（保证有效闭合）。\\n\\n当path长度等于2n时，收集结果。\\n\\n这种方法通过剪枝保证了生成的每一步都是合法的，不需要最后再验证。',
+      approach: `【面试回答模板】
+
+这道题用回溯法生成。
+
+核心在于维护两个计数器：left（已放左括号数）和right（已放右括号数）。
+
+每次递归有两个选择：
+1. 如果left < n，可以放左括号。
+2. 如果right < left，可以放右括号（保证有效闭合）。
+
+当path长度等于2n时，收集结果。
+
+这种方法通过剪枝保证了生成的每一步都是合法的，不需要最后再验证。`,
       timeComplexity: 'O(4^n / √n)。这是第n个卡特兰数，渐近复杂度如此。简单说就是指数级。',
       spaceComplexity: 'O(n)。递归深度最大为2n。',
       followUp: [
@@ -1037,13 +1126,34 @@ if (right - left + 1 == k) {
       {
         title: '第1步：主方法遍历起点',
         description: '尝试以每个格子为起点',
-        code: 'public boolean exist(char[][] board, String word) {\\n    for (int i = 0; i < board.length; i++) {\\n        for (int j = 0; j < board[0].length; j++) {\\n            // 从(i,j)开始搜索，匹配word的第0个字符\\n            if (backtrack(board, word, i, j, 0)) {\\n                return true;\\n            }\\n        }\\n    }\\n    return false;\\n}',
+        code: `public boolean exist(char[][] board, String word) {
+    for (int i = 0; i < board.length; i++) {
+        for (int j = 0; j < board[0].length; j++) {
+            // 从(i,j)开始搜索，匹配word的第0个字符
+            if (backtrack(board, word, i, j, 0)) {
+                return true;
+            }
+        }
+    }
+    return false;
+}`,
         explanation: '💡 只要有一个起点成功找到路径，就返回true。'
       },
       {
         title: '第2步：回溯函数——失败条件',
         description: '越界或不匹配',
-        code: 'private boolean backtrack(char[][] board, String word, int i, int j, int index) {\\n    // 成功找到所有字符\\n    if (index == word.length()) return true;\\n    \\n    // 越界检查 或 字符不匹配 或 已访问(#)\\n    if (i < 0 || i >= board.length || j < 0 || j >= board[0].length || \\n        board[i][j] != word.charAt(index)) {\\n        return false;\\n    }\\n    \\n    // TODO: 标记访问并递归\\n}',
+        code: `private boolean backtrack(char[][] board, String word, int i, int j, int index) {
+    // 成功找到所有字符
+    if (index == word.length()) return true;
+    
+    // 越界检查 或 字符不匹配 或 已访问(#)
+    if (i < 0 || i >= board.length || j < 0 || j >= board[0].length || 
+        board[i][j] != word.charAt(index)) {
+        return false;
+    }
+    
+    // TODO: 标记访问并递归
+}`,
         explanation: '⚠️ 边界检查很重要！一定要先检查越界，再访问数组。'
       },
       {
@@ -1071,7 +1181,20 @@ if (right - left + 1 == k) {
       }
     ],
     interview: {
-      approach: '【面试回答模板】\\n\\n这道题是典型的网格DFS搜索。\\n\\n思路：\\n1. 遍历网格中的每个格子，如果它和单词首字母匹配，就从它开始DFS。\\n\\n2. DFS函数接收坐标(i, j)和当前匹配到的单词索引index。\\n\\n3. 在DFS中，先判断是否越界、是否匹配、是否已访问。\\n\\n4. 关键点：为了不重复使用格子，我会在进入递归前把board[i][j]改成特殊字符（如\'#\'），递归结束后再改回去（回溯）。\\n\\n5. 只要四个方向中有一个返回true，就说明找到了。',
+      approach: `【面试回答模板】
+
+这道题是典型的网格DFS搜索。
+
+思路：
+1. 遍历网格中的每个格子，如果它和单词首字母匹配，就从它开始DFS。
+
+2. DFS函数接收坐标(i, j)和当前匹配到的单词索引index。
+
+3. 在DFS中，先判断是否越界、是否匹配、是否已访问。
+
+4. 关键点：为了不重复使用格子，我会在进入递归前把board[i][j]改成特殊字符（如'#'），递归结束后再改回去（回溯）。
+
+5. 只要四个方向中有一个返回true，就说明找到了。`,
       timeComplexity: 'O(M×N×3^L)。M,N是网格大小，L是单词长度。每次递归有3个方向可走（除去回头的方向）。',
       spaceComplexity: 'O(L)。递归深度最大为单词长度。如果不修改原数组用visited数组，则是O(M×N)。',
       followUp: [
@@ -1127,30 +1250,80 @@ if (right - left + 1 == k) {
       {
         title: '第1步：主方法框架',
         description: '初始化',
-        code: 'public List<List<String>> partition(String s) {\\n    List<List<String>> result = new ArrayList<>();\\n    backtrack(s, 0, new ArrayList<>(), result);\\n    return result;\\n}',
+        code: `public List<List<String>> partition(String s) {
+    List<List<String>> result = new ArrayList<>();
+    backtrack(s, 0, new ArrayList<>(), result);
+    return result;
+}`,
         explanation: 'start从0开始，表示当前的切割起始位置。'
       },
       {
         title: '第2步：回溯函数——遍历切割点',
         description: '尝试每一个可能的切割位置',
-        code: 'private void backtrack(String s, int start, \\n                       List<String> path, List<List<String>> result) {\\n    // 终止条件：切到了最后\\n    if (start == s.length()) {\\n        result.add(new ArrayList<>(path));\\n        return;\\n    }\\n    \\n    // 从start处开始截取，长度至少为1\\n    for (int end = start + 1; end <= s.length(); end++) {\\n        // 截取 [start, end) 的子串\\n        String sub = s.substring(start, end);\\n        \\n        // TODO: 判断回文并递归\\n    }\\n}',
+        code: `private void backtrack(String s, int start, 
+                       List<String> path, List<List<String>> result) {
+    // 终止条件：切到了最后
+    if (start == s.length()) {
+        result.add(new ArrayList<>(path));
+        return;
+    }
+    
+    // 从start处开始截取，长度至少为1
+    for (int end = start + 1; end <= s.length(); end++) {
+        // 截取 [start, end) 的子串
+        String sub = s.substring(start, end);
+        
+        // TODO: 判断回文并递归
+    }
+}`,
         explanation: '💡 substring是左闭右开区间，所以end从start+1开始，直到s.length()。'
       },
       {
         title: '第3步：判断回文并处理',
         description: '只有回文串才切割',
-        code: 'private void backtrack(String s, int start, \\n                       List<String> path, List<List<String>> result) {\\n    // ...前文省略...\\n    for (int end = start + 1; end <= s.length(); end++) {\\n        String sub = s.substring(start, end);\\n        \\n        // 只有当前截取的是回文，才继续切剩下的\\n        if (isPalindrome(sub)) {\\n            path.add(sub);\\n            backtrack(s, end, path, result);  // 新的start变成end\\n            path.remove(path.size() - 1);\\n        }\\n    }\\n}',
+        code: `private void backtrack(String s, int start, 
+                       List<String> path, List<List<String>> result) {
+    // ...前文省略...
+    for (int end = start + 1; end <= s.length(); end++) {
+        String sub = s.substring(start, end);
+        
+        // 只有当前截取的是回文，才继续切剩下的
+        if (isPalindrome(sub)) {
+            path.add(sub);
+            backtrack(s, end, path, result);  // 新的start变成end
+            path.remove(path.size() - 1);
+        }
+    }
+}`,
         explanation: '🎯 核心逻辑：如果前缀sub不是回文，就直接跳过（剪枝），尝试更长的sub。'
       },
       {
         title: '第4步：回文验证辅助函数',
         description: '双指针法',
-        code: 'private boolean isPalindrome(String s) {\\n    int left = 0, right = s.length() - 1;\\n    while (left < right) {\\n        if (s.charAt(left++) != s.charAt(right--)) {\\n            return false;\\n        }\\n    }\\n    return true;\\n}',
+        code: `private boolean isPalindrome(String s) {
+    int left = 0, right = s.length() - 1;
+    while (left < right) {
+        if (s.charAt(left++) != s.charAt(right--)) {
+            return false;
+        }
+    }
+    return true;
+}`,
         explanation: '也可以用DP预处理优化，但在面试中先写出双指针法通常足够且更简单。'
       }
     ],
     interview: {
-      approach: '【面试回答模板】\\n\\n这道题用回溯法解决。\\n\\n思路是将问题分解为：\\n1. 在当前位置切一刀，如果切下来的前缀是回文串，就放入path。\\n2. 对剩余的后缀字符串递归继续切。\\n\\n终止条件是切到了字符串末尾。\\n\\n回文判断可以用双指针法，时间复杂度O(n)。如果字符串很长，可以用动态规划预处理一个boolean[][] dp表，把判断降低到O(1)。',
+      approach: `【面试回答模板】
+
+这道题用回溯法解决。
+
+思路是将问题分解为：
+1. 在当前位置切一刀，如果切下来的前缀是回文串，就放入path。
+2. 对剩余的后缀字符串递归继续切。
+
+终止条件是切到了字符串末尾。
+
+回文判断可以用双指针法，时间复杂度O(n)。如果字符串很长，可以用动态规划预处理一个boolean[][] dp表，把判断降低到O(1)。`,
       timeComplexity: 'O(n × 2^n)。在最坏情况下（如全是一样的字符），有2^n种分割方案（每两个字符间切或不切），每种方案需要O(n)时间构造结果。',
       spaceComplexity: 'O(n)。递归深度最大为n。',
       followUp: [
@@ -1206,30 +1379,93 @@ if (right - left + 1 == k) {
       {
         title: '第1步：主方法与初始化',
         description: '初始化棋盘',
-        code: 'public List<List<String>> solveNQueens(int n) {\\n    List<List<String>> result = new ArrayList<>();\\n    char[][] board = new char[n][n];\\n    // 初始化填充 \'.\'\\n    for (char[] row : board) Arrays.fill(row, \'.\');\\n    \\n    backtrack(board, 0, result);\\n    return result;\\n}',
+        code: `public List<List<String>> solveNQueens(int n) {
+    List<List<String>> result = new ArrayList<>();
+    char[][] board = new char[n][n];
+    // 初始化填充 '.'
+    for (char[] row : board) Arrays.fill(row, '.');
+    
+    backtrack(board, 0, result);
+    return result;
+}`,
         explanation: 'board数组用于回溯过程中记录状态，最后再转成List<String>。'
       },
       {
         title: '第2步：回溯函数',
         description: '逐行尝试',
-        code: 'private void backtrack(char[][] board, int row, List<List<String>> result) {\\n    // 终止条件：所有行都放好了\\n    if (row == board.length) {\\n        result.add(construct(board));\\n        return;\\n    }\\n    \\n    // 尝试当前行的每一列\\n    for (int col = 0; col < board.length; col++) {\\n        if (isValid(board, row, col)) {\\n            board[row][col] = \'Q\';     // 放置\\n            backtrack(board, row + 1, result); // 递归下一行\\n            board[row][col] = \'.\';     // 撤销（回溯）\\n        }\\n    }\\n}',
+        code: `private void backtrack(char[][] board, int row, List<List<String>> result) {
+    // 终止条件：所有行都放好了
+    if (row == board.length) {
+        result.add(construct(board));
+        return;
+    }
+    
+    // 尝试当前行的每一列
+    for (int col = 0; col < board.length; col++) {
+        if (isValid(board, row, col)) {
+            board[row][col] = 'Q';     // 放置
+            backtrack(board, row + 1, result); // 递归下一行
+            board[row][col] = '.';     // 撤销（回溯）
+        }
+    }
+}`,
         explanation: 'row表示当前正在处理哪一行。'
       },
       {
         title: '第3步：验证函数（检查冲突）',
         description: '检查列和两个对角线',
-        code: 'private boolean isValid(char[][] board, int row, int col) {\\n    // 1. 检查列（上方是否有皇后）\\n    for (int i = 0; i < row; i++) {\\n        if (board[i][col] == \'Q\') return false;\\n    }\\n    \\n    // 2. 检查左上对角线\\n    for (int i = row - 1, j = col - 1; i >= 0 && j >= 0; i--, j--) {\\n        if (board[i][j] == \'Q\') return false;\\n    }\\n    \\n    // 3. 检查右上对角线\\n    for (int i = row - 1, j = col + 1; i >= 0 && j < board.length; i--, j++) {\\n        if (board[i][j] == \'Q\') return false;\\n    }\\n    \\n    return true;\\n}',
+        code: `private boolean isValid(char[][] board, int row, int col) {
+    // 1. 检查列（上方是否有皇后）
+    for (int i = 0; i < row; i++) {
+        if (board[i][col] == 'Q') return false;
+    }
+    
+    // 2. 检查左上对角线
+    for (int i = row - 1, j = col - 1; i >= 0 && j >= 0; i--, j--) {
+        if (board[i][j] == 'Q') return false;
+    }
+    
+    // 3. 检查右上对角线
+    for (int i = row - 1, j = col + 1; i >= 0 && j < board.length; i--, j++) {
+        if (board[i][j] == 'Q') return false;
+    }
+    
+    return true;
+}`,
         explanation: '🤔 为什么不用检查行？因为我们是backtrack(row+1)，一行只放一个。\\n🤔 为什么只检查上方？因为下方的还没放。'
       },
       {
         title: '第4步：构造结果',
         description: '将char[][]转为List<String>',
-        code: 'private List<String> construct(char[][] board) {\\n    List<String> list = new ArrayList<>();\\n    for (char[] row : board) {\\n        list.add(new String(row));\\n    }\\n    return list;\\n}',
+        code: `private List<String> construct(char[][] board) {
+    List<String> list = new ArrayList<>();
+    for (char[] row : board) {
+        list.add(new String(row));
+    }
+    return list;
+}`,
         explanation: '简单的数据类型转换。'
       }
     ],
     interview: {
-      approach: '【面试回答模板】\\n\\nN皇后是经典的回溯题。\\n\\n策略：逐行放置。每一行尝试在每一列在该位置放置皇后。\\n\\n判断合法性：\\n1. 列方向不能有皇后。\\n2. 两个对角线方向不能有皇后。\\n（行方向天然合法，因为我们一行只放一个）\\n\\n为了验证合法性，可以直接扫描上方区域（代码里写的isValid方法），时间复杂度每步O(n)。\\n\\n优化：可以用三个boolean数组（或哈希集）分别记录：\\n- cols[]：列是否被占\\n- diag1[]：左上-右下对角线是否被占（对于(r,c)，index = r - c + n）\\n- diag2[]：右上-左下对角线是否被占（对于(r,c)，index = r + c）\\n这样判断合法性就是O(1)了。',
+      approach: `【面试回答模板】
+
+N皇后是经典的回溯题。
+
+策略：逐行放置。每一行尝试在每一列在该位置放置皇后。
+
+判断合法性：
+1. 列方向不能有皇后。
+2. 两个对角线方向不能有皇后。
+（行方向天然合法，因为我们一行只放一个）
+
+为了验证合法性，可以直接扫描上方区域（代码里写的isValid方法），时间复杂度每步O(n)。
+
+优化：可以用三个boolean数组（或哈希集）分别记录：
+- cols[]：列是否被占
+- diag1[]：左上-右下对角线是否被占（对于(r,c)，index = r - c + n）
+- diag2[]：右上-左下对角线是否被占（对于(r,c)，index = r + c）
+这样判断合法性就是O(1)了。`,
       timeComplexity: 'O(N!)。第一行有N种选法，第二行N-1种...虽然有剪枝，但上界是N!。',
       spaceComplexity: 'O(N)。递归栈深度为N，棋盘空间为N^2。',
       followUp: [
