@@ -1,23 +1,60 @@
-## 问题分析
-GitHub Pages显示404错误，主要原因是项目的构建配置和文件结构不符合GitHub Pages的静态托管要求：
-1. 项目使用客户端-服务器架构，但GitHub Pages只能托管静态文件
-2. 当前Vite构建配置将前端文件输出到`dist/public`目录，而GitHub Pages默认需要根目录有`index.html`
-3. 缺少GitHub Pages配置文件
+# 部署成功总结
 
-## 解决方案
-1. **调整Vite构建配置**：修改`vite.config.ts`，将构建输出目录改为根目录的`docs`文件夹，这是GitHub Pages支持的目录
-2. **修改构建命令**：更新`package.json`中的构建命令，只构建前端部分，移除后端构建
-3. **添加GitHub Pages配置**：创建`.github/workflows/deploy.yml`文件，实现自动部署
-4. **测试构建**：运行构建命令验证输出结果
+## ✅ 网站访问地址
 
-## 实施步骤
-1. 编辑`vite.config.ts`，修改`build.outDir`为`docs`
-2. 更新`package.json`，简化构建命令为只构建前端
-3. 创建GitHub Actions部署 workflow 文件
-4. 运行构建命令测试
-5. 提交修改到GitHub
+### GitHub Pages（国际访问推荐）
+- **地址**: https://eternityheart.github.io/algo-interview-guide/
+- **状态**: ✅ 正常运行
 
-## 预期结果
-- 构建后的静态文件将输出到`docs`目录
-- GitHub Pages将自动部署`docs`目录中的内容
-- 访问仓库的GitHub Pages URL将显示正常的网站内容
+### Vercel（中国大陆访问推荐）
+- **地址**: https://algo-interview-guide.vercel.app/
+- **状态**: ✅ 正常运行
+- **备用地址**: https://algo-interview-guide-git-master-eternityhearts-projects.vercel.app/
+
+---
+
+## 📝 修复记录
+
+### 1. GitHub Pages 404 问题修复
+- **问题**: 工作流使用 `main` 分支，但代码实际在 `master` 分支
+- **解决**: 修改 `.github/workflows/deploy.yml` 将 `main` 改为 `master`
+
+### 2. Vite 配置优化
+- **问题**: 固定的 `base: '/algo-interview-guide/'` 导致 Vercel 部署404
+- **解决**: 添加环境智能检测，根据部署平台自动选择 base 路径
+
+### 3. Vercel 配置
+- **新增**: `vercel.json` 配置文件
+- **内容**: 构建命令、输出目录、SPA路由重写规则
+- **操作**: 手动将 `master` 分支部署提升为生产版本
+
+---
+
+## 🔧 技术细节
+
+### vite.config.ts 修改
+```typescript
+const getBase = () => {
+  if (process.env.VERCEL) return '/';
+  if (process.env.GITHUB_ACTIONS) return '/algo-interview-guide/';
+  return '/';
+};
+```
+
+### vercel.json 配置
+```json
+{
+  "buildCommand": "pnpm run build",
+  "outputDirectory": "dist/public",
+  "installCommand": "pnpm install",
+  "framework": "vite",
+  "rewrites": [
+    { "source": "/(.*)", "destination": "/index.html" }
+  ]
+}
+```
+
+---
+
+## 🎉 完成时间
+2026-01-15
