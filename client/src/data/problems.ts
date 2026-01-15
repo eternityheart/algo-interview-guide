@@ -880,45 +880,53 @@ if (right - left + 1 == k) {
         description: '初始化并调用回溯',
         code: `public List<List<Integer>> combinationSum(int[] candidates, int target) {
     List<List<Integer>> result = new ArrayList<>();
-    // 可选优化：Arrays.sort(candidates);
+    // 排序是去重和剪枝的基础
+    Arrays.sort(candidates);
     backtrack(candidates, target, 0, new ArrayList<>(), result);
     return result;
 }`,
-        explanation: '💡 排序是可选的优化，可以让剪枝更高效。\\n🤔 初始remain就是target（还需要凑的数）。'
+        explanation: '💡 排序非常重要！它不仅让我们可以提前终止循环（剪枝），还是处理重复元素的基础。'
       },
       {
         title: '第2步：回溯函数——两个终止条件',
         description: '凑够了或超了都要停止',
         code: `private void backtrack(int[] candidates, int remain, int start,
                        List<Integer> path, List<List<Integer>> result) {
-    if (remain < 0) return;  // 剪枝：超过target了
-    if (remain == 0) {       // 正好凑够
+    // 剩余值为0，找到有效组合
+    if (remain == 0) {
         result.add(new ArrayList<>(path));
         return;
     }
     // TODO: 遍历选择
 }`,
-        explanation: '⭐ 用remain（剩余值）比用sum（当前和）更直观。\\n🤔 remain=0说明path里的数加起来正好等于target。'
+        explanation: '🤔 为什么不需要 if (remain < 0) return？\\n因为我们在for循环里做了剪枝（candidates[i] > remain），保证了进入递归时remain一定 >= 0。'
       },
       {
         title: '第3步：遍历选择（可重复选自己）',
         description: '从start开始，递归传i不是i+1',
         code: `private void backtrack(int[] candidates, int remain, int start,
                        List<Integer> path, List<List<Integer>> result) {
-    if (remain < 0) return;
-    if (remain == 0) {
-        result.add(new ArrayList<>(path));
-        return;
-    }
-    
+    // ...前文省略...
     for (int i = start; i < candidates.length; i++) {
+        // 剪枝优化：如果当前数已经大于剩余值，后续数更大，直接终止循环
+        if (candidates[i] > remain) {
+            break;
+        }
+
+        // 去重优化：跳过同一层中重复的元素（避免重复组合）
+        if (i > start && candidates[i] == candidates[i - 1]) {
+            continue;
+        }
+
+        // 选择当前元素
         path.add(candidates[i]);
-        // 关键：传i不是i+1，允许重复使用
+        // 允许重复使用当前元素，所以下一轮start还是i
         backtrack(candidates, remain - candidates[i], i, path, result);
+        // 回溯：撤销选择
         path.remove(path.size() - 1);
     }
 }`,
-        explanation: '🎯 核心区别就在这里！\\n子集/排列：backtrack(..., i+1, ...)\\n组合总和：backtrack(..., i, ...)\\n\\n传i意味着下次还可以选candidates[i]。'
+        explanation: '🚀 两个关键优化：\\n1. 剪枝：candidates[i] > remain 时 break，因为数组有序，后面的肯定也不行。\\n2. 去重：i > start && candidates[i] == candidates[i-1] 时 continue，避免同一层选同样的数。'
       }
     ],
     interview: {
